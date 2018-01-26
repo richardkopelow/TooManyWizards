@@ -29,9 +29,10 @@ public class BoardTile : MonoBehaviour
     {
         playerPieces.Add(piece);
         piece.RegisterToTile(this);
+        int positionOffset = playerPieces.Count % 2 == 0 ? 1 : 0;
         for (int i = 0; i < playerPieces.Count - 1; i++)
         {
-            playerPieces[i].SetPosition(playerNodes[i].position);
+            playerPieces[i].SetPosition(playerNodes[i + positionOffset].position);
         }
     }
 
@@ -49,7 +50,7 @@ public class BoardTile : MonoBehaviour
         if (other.tag == "PlayerPiece")
         {
             PlayerPiece piece = other.GetComponent<PlayerPiece>();
-            if (piece.Movement>0)
+            if (piece.Movement > 0)
             {
                 piece.Movement--;
                 MovePiece(piece);

@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class PlayerPiece : MonoBehaviour
 {
     public int Movement = 0;
+    public int PersuasionToken = 0;
+    public int CombatTokens = 0;
     private NavMeshAgent nav;
     private BoardTile currentTile;
     void Start()
