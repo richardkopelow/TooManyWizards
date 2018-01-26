@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class BoardTile : MonoBehaviour
 {
+    public BoardTile[] NextTiles;
+    public WizardPiece Wizard;
+
     private Transform trans;
 
     private Transform wizardNode;
     private Transform[] playerNodes;
-	private PlayerPiece[] playerPieces;
+    private List<PlayerPiece> playerPieces;
 
     void Start()
     {
@@ -19,13 +22,42 @@ public class BoardTile : MonoBehaviour
         {
             playerNodes[i] = trans.Find("PlayerNode" + i);
         }
-		playerPieces = new PlayerPiece[GlobalVals.Instance.PlayerCount];
+        playerPieces = new List<PlayerPiece>(GlobalVals.Instance.PlayerCount);
     }
 
-	public Transform RegisterPlayerPiece(PlayerPiece piece)
-	{
-		//TODO: Make this actually keep track of players on the tile and return the proper node
-		//It should also issue position refresh requests to the pieces to account for pieces entering
-		return playerNodes[0];
-	}
+    public void RegisterPlayerPiece(PlayerPiece piece)
+    {
+        playerPieces.Add(piece);
+        piece.RegisterToTile(this);
+        for (int i = 0; i < playerPieces.Count - 1; i++)
+        {
+            playerPieces[i].SetPosition(playerNodes[i].position);
+        }
+    }
+
+    public void MovePiece(PlayerPiece piece)
+    {
+        if (NextTiles.Length == 1)
+        {
+            piece.SetPosition(NextTiles[0].GetComponent<Transform>().position);
+            piece.DeregisterToTile();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "PlayerPiece")
+        {
+            PlayerPiece piece = other.GetComponent<PlayerPiece>();
+            if (piece.Movement>0)
+            {
+                piece.Movement--;
+                MovePiece(piece);
+            }
+            else
+            {
+                RegisterPlayerPiece(piece);
+            }
+        }
+    }
 }
