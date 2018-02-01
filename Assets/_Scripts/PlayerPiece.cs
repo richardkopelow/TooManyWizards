@@ -8,16 +8,19 @@ public class PlayerPiece : MonoBehaviour
     public int Movement = 0;
     public int PersuasionToken = 0;
     public int CombatTokens = 0;
+
     private NavMeshAgent nav;
+    private Animator anim; 
     private BoardTile currentTile;
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-
+        anim.SetFloat("Speed",nav.velocity.magnitude);
     }
 
     public void SetPosition(Vector3 position)
