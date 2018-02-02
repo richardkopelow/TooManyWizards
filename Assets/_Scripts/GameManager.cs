@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
+    public Transform Constant;
     public GameObject Roller;
     public GameObject DirectionPicker;
     public PlayerPiece[] Pieces;
@@ -38,6 +39,10 @@ public class GameManager : MonoBehaviour
 
     public void StartTurn()
     {
+        Text playerName = Constant.Find("PlayerName").GetComponent<Text>();
+        PlayerPiece player = Pieces[activePlayerIndex];
+        playerName.text = string.Format("Player {0}\nC Tokens:\t{1}\nP Tokens:\t{2}", activePlayerIndex + 1, player.CombatTokens, player.PersuasionToken);
+        player.StartTurn();
         Roller.SetActive(true);
     }
 
