@@ -35,11 +35,21 @@ public class PlayerPiece : MonoBehaviour
         {
             EnterCombat();
         }
+        else
+        {
+            GameManager.Instance.EndTurn();
+        }
     }
 
     public void DeregisterToTile()
     {
         currentTile = null;
+    }
+
+    public void Rolled(int movement)
+    {
+        Movement = movement;
+        currentTile.MovePiece(this);
     }
 
     public void EnterCombat()

@@ -17,7 +17,7 @@ public class GlobalVals
 
     private GlobalVals()
     {
-        PlayerCount = 0;
+        PlayerCount = 1;
     }
 
     public void Reset()

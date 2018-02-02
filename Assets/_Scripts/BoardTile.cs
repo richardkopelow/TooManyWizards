@@ -12,6 +12,7 @@ public class BoardTile : MonoBehaviour
     private Transform wizardNode;
     private Transform[] playerNodes;
     private List<PlayerPiece> playerPieces;
+    private PlayerPiece activePiece;
 
     void Start()
     {
@@ -30,7 +31,7 @@ public class BoardTile : MonoBehaviour
         playerPieces.Add(piece);
         piece.RegisterToTile(this);
         int positionOffset = playerPieces.Count % 2 == 0 ? 1 : 0;
-        for (int i = 0; i < playerPieces.Count - 1; i++)
+        for (int i = 0; i < playerPieces.Count; i++)
         {
             playerPieces[i].SetPosition(playerNodes[i + positionOffset].position);
         }
@@ -40,9 +41,28 @@ public class BoardTile : MonoBehaviour
     {
         if (NextTiles.Length == 1)
         {
-            piece.SetPosition(NextTiles[0].GetComponent<Transform>().position);
-            piece.DeregisterToTile();
+            movePiece(piece, 0);
         }
+        else
+        {
+            activePiece = piece;
+            GameManager.Instance.GetDirection(this);
+        }
+    }
+
+    private void movePiece(PlayerPiece piece, int index)
+    {
+        if (NextTiles.Length > index)
+        {
+            piece.SetPosition(NextTiles[index].GetComponent<Transform>().position);
+            piece.DeregisterToTile();
+            piece.Movement--;
+        }
+    }
+
+    public void DirectionPicked(int direction)
+    {
+        movePiece(activePiece, direction);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,8 +72,14 @@ public class BoardTile : MonoBehaviour
             PlayerPiece piece = other.GetComponent<PlayerPiece>();
             if (piece.Movement > 0)
             {
-                piece.Movement--;
-                MovePiece(piece);
+                if (NextTiles.Length == 0)
+                {
+                    //End Game
+                }
+                else
+                {
+                    MovePiece(piece);
+                }
             }
             else
             {
