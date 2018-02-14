@@ -30,6 +30,11 @@ public class BoardTile : MonoBehaviour
     {
         playerPieces.Add(piece);
         piece.RegisterToTile(this);
+        coordinatePositioning();
+    }
+
+    private void coordinatePositioning()
+    {
         int positionOffset = playerPieces.Count % 2 == 0 ? 1 : 0;
         Vector3 lookat = Wizard != null || NextTiles.Length == 0 ? wizardNode.position : NextTiles[0].GetComponent<Transform>().position;
         for (int i = 0; i < playerPieces.Count; i++)

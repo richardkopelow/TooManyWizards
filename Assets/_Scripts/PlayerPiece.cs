@@ -87,7 +87,7 @@ public class PlayerPiece : MonoBehaviour
 
     public void EndTurn()
     {
-        //VCam.SetActive(false);
+        VCam.SetActive(false);
         GameManager.Instance.EndTurn();
     }
 }

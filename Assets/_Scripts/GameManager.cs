@@ -16,25 +16,48 @@ public class GameManager : MonoBehaviour
     public Transform Constant;
     public GameObject Roller;
     public GameObject DirectionPicker;
+    public Notifications NotificationView;
     public PlayerPiece[] Pieces;
 
+    private int tileMask;
     private Transform trans;
     private bool playing;
     private int activePlayerIndex = 0;
     private BoardTile activeTile;
+    private bool picking;
 
+    #region UnityMagic
     void Start()
     {
         if (_instance == null)
         {
             _instance = this;
             trans = GetComponent<Transform>();
-            StartTurn();
+            this.ExecuteDelayed(init,0.2f);
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    void Update()
+    {
+        if (picking && Input.GetMouseButtonUp(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray,out hit, 400, tileMask))
+            {
+                //Tile Picked
+            }
+        }
+    }
+    #endregion
+
+    private void init()
+    {
+        StartTurn();
     }
 
     public void StartTurn()
@@ -60,14 +83,16 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
         Pieces[activePlayerIndex].Rolled(number);
-		yield return new WaitForSeconds(0.3f);
-		Roller.SetActive(false);
+        yield return new WaitForSeconds(0.3f);
+        Roller.SetActive(false);
     }
+
     public void GetDirection(BoardTile tile)
     {
-		activeTile = tile;
+        activeTile = tile;
         DirectionPicker.SetActive(true);
     }
+
     public void Direction(int direction)
     {
         DirectionPicker.SetActive(false);
@@ -78,6 +103,13 @@ public class GameManager : MonoBehaviour
     public void EndTurn()
     {
         activePlayerIndex = (activePlayerIndex + 1) % GlobalVals.Instance.PlayerCount;
-        StartTurn();
+        //StartTurn();
+        startWizardPlacement();
+    }
+
+    private void startWizardPlacement()
+    {
+        picking = true;
+        NotificationView.DisplayNotification("Place a wizard", 1);
     }
 }

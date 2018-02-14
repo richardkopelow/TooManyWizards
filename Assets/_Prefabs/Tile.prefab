@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4631480418523752}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerNode3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4327771188008986}
   - component: {fileID: 114374376843171154}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CMFreeLook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4733101627221552}
   - component: {fileID: 114184125391326372}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BottomRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4239156230893332}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerNode4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 114613140961549414}
   - component: {fileID: 114427972969744454}
   - component: {fileID: 114987610986775856}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4137205484649468}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerNode0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4678605278733340}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerNode1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 65942156555247438}
   - component: {fileID: 114307359957143884}
   - component: {fileID: 65984720711618130}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4433070688771600}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WizardNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4240176133439586}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerNode2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 114322129756535314}
   - component: {fileID: 114216681681999942}
   - component: {fileID: 114783868042836072}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4914276705089608}
   - component: {fileID: 114325244198951072}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TopRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4335657247821288}
   - component: {fileID: 114235573286171172}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MiddleRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 114077464228605148}
   - component: {fileID: 114171936315266204}
   - component: {fileID: 114871393117119986}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
