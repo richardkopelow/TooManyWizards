@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
             trans = GetComponent<Transform>();
-            this.ExecuteDelayed(init,0.2f);
+            tileMask = LayerMask.GetMask("Tile");
+            this.ExecuteDelayed(init, 0.2f);
         }
         else
         {
@@ -47,9 +48,16 @@ public class GameManager : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray,out hit, 400, tileMask))
+            if (Physics.Raycast(ray, out hit, 400, tileMask))
             {
-                //Tile Picked
+                BoardTile hitTile = hit.transform.GetComponent<BoardTile>();
+                if (hitTile.Wizard == null)
+                {
+                    hitTile.SpawnWizard(WizardPiece.WizardType.Apprentice);
+                    picking = false;
+
+                    StartTurn();
+                }
             }
         }
     }

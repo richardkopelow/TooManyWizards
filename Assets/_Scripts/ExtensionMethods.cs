@@ -14,4 +14,9 @@ static class ExtensionMethods
         yield return new WaitForSeconds(delay);
         funtion();
     }
+
+    public static string GetName(this Enum e)
+    {
+        return Enum.GetName(e.GetType(), e);
+    }
 }

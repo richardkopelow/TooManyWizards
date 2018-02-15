@@ -2,15 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WizardPiece : MonoBehaviour {
+public class WizardPiece : MonoBehaviour
+{
+    public enum WizardType
+    {
+        Apprentice,
+        Warlock,
+        Teleportation
+    }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private Animator anim;
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+
+    }
+
+    public void Attack()
+    {
+        anim.SetBool("Attack", true);
+    }
+
+    public void AttackFinished()
+    {
+        anim.SetBool("Attack", false);
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
+
 }

@@ -36,13 +36,13 @@ public class Notifications : MonoBehaviour
 
     public Coroutine DisplayNotification(string notification, float time)
     {
+        Text = notification;
+        Show();
         return StartCoroutine(displayNotification(notification, time));
     }
 
     private IEnumerator displayNotification(string notification, float time)
     {
-        Text = notification;
-        Show();
         yield return new WaitForSeconds(time);
         Hide();
     }

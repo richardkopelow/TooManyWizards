@@ -94,4 +94,14 @@ public class BoardTile : MonoBehaviour
             }
         }
     }
+
+    public void SpawnWizard(WizardPiece.WizardType pieceType)
+    {
+        GameObject wizardPrefab = wizardPrefab = Resources.Load<GameObject>(pieceType.GetName());
+        Transform wizardTrans = Instantiate<GameObject>(wizardPrefab).GetComponent<Transform>();
+        wizardTrans.parent = trans;
+        wizardTrans.localPosition = wizardNode.localPosition;
+        wizardTrans.localEulerAngles = new Vector3(-90, 180, 0);
+        Wizard = wizardTrans.GetComponent<WizardPiece>();
+    }
 }
