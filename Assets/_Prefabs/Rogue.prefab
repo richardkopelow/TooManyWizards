@@ -179,7 +179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1375994152162286
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,8 +926,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VCam: {fileID: 1368252175406262}
+  Started: 0
   Movement: 0
-  PersuasionToken: 4
+  PersuasionTokens: 4
   CombatTokens: 2
 --- !u!136 &136036864145233738
 CapsuleCollider:

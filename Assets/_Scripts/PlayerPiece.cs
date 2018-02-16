@@ -8,7 +8,7 @@ public class PlayerPiece : MonoBehaviour
     public GameObject VCam;
     public bool Started = false;
     public int Movement = 0;
-    public int PersuasionToken = 0;
+    public int PersuasionTokens = 0;
     public int CombatTokens = 0;
 
     private Transform trans;
@@ -59,17 +59,6 @@ public class PlayerPiece : MonoBehaviour
         {
             Started = true;
         }
-        else
-        {
-            if (currentTile.Wizard != null)
-            {
-                EnterCombat();
-            }
-            else
-            {
-                EndTurn();
-            }
-        }
     }
 
     public void DeregisterToTile()
@@ -83,7 +72,7 @@ public class PlayerPiece : MonoBehaviour
         currentTile.MovePiece(this);
     }
 
-    public void EnterCombat()
+    public void StartCombat()
     {
 
     }
@@ -96,6 +85,5 @@ public class PlayerPiece : MonoBehaviour
     public void EndTurn()
     {
         VCam.SetActive(false);
-        GameManager.Instance.EndTurn();
     }
 }

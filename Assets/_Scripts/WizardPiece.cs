@@ -10,6 +10,9 @@ public class WizardPiece : MonoBehaviour
         Warlock,
         Teleportation
     }
+    public string Name;
+    public int FightStrength;
+    public int PersuasionStrength;
 
     private Animator anim;
 

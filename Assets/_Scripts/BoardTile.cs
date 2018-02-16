@@ -5,6 +5,7 @@ using UnityEngine;
 public class BoardTile : MonoBehaviour
 {
     public BoardTile[] NextTiles;
+    public GameObject VCam;
     public WizardPiece Wizard;
 
     private Transform trans;
@@ -53,7 +54,7 @@ public class BoardTile : MonoBehaviour
         else
         {
             activePiece = piece;
-            GameManager.Instance.GetDirection(this);
+            GameManager.Instance.GetDirection();
         }
     }
 
@@ -76,6 +77,7 @@ public class BoardTile : MonoBehaviour
     {
         if (other.tag == "PlayerPiece")
         {
+            GameManager.Instance.RegisterTile(this);
             PlayerPiece piece = other.GetComponent<PlayerPiece>();
             if (piece.Movement > 0)
             {
@@ -90,6 +92,19 @@ public class BoardTile : MonoBehaviour
             }
             else
             {
+                if (piece.Started)
+                {
+                    if (Wizard != null)
+                    {
+                        StartCombat();
+                        piece.EndTurn();
+                    }
+                    else
+                    {
+                        GameManager.Instance.EndTurn();
+                        piece.EndTurn();
+                    }
+                }
                 RegisterPlayerPiece(piece);
             }
         }
@@ -103,5 +118,16 @@ public class BoardTile : MonoBehaviour
         wizardTrans.localPosition = wizardNode.localPosition;
         wizardTrans.localEulerAngles = new Vector3(-90, 180, 0);
         Wizard = wizardTrans.GetComponent<WizardPiece>();
+    }
+
+    public void StartCombat()
+    {
+        VCam.SetActive(true);
+        GameManager.Instance.StartCombat(Wizard);
+    }
+
+    public void EndCombat(bool attack, bool win)
+    {
+        VCam.SetActive(false);
     }
 }

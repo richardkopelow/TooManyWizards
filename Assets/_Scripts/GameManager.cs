@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public Transform Constant;
     public GameObject Roller;
     public GameObject DirectionPicker;
+    public CombatHUD Combat;
     public Notifications NotificationView;
     public PlayerPiece[] Pieces;
 
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     private bool playing;
     private int activePlayerIndex = 0;
     private BoardTile activeTile;
+    private WizardPiece activeWizard;
     private bool picking;
 
     #region UnityMagic
@@ -72,7 +74,7 @@ public class GameManager : MonoBehaviour
     {
         Text playerName = Constant.Find("PlayerName").GetComponent<Text>();
         PlayerPiece player = Pieces[activePlayerIndex];
-        playerName.text = string.Format("Player {0}\nC Tokens:\t{1}\nP Tokens:\t{2}", activePlayerIndex + 1, player.CombatTokens, player.PersuasionToken);
+        playerName.text = string.Format("Player {0}\nC Tokens:\t{1}\nP Tokens:\t{2}", activePlayerIndex + 1, player.CombatTokens, player.PersuasionTokens);
         player.StartTurn();
         Roller.SetActive(true);
     }
@@ -95,9 +97,13 @@ public class GameManager : MonoBehaviour
         Roller.SetActive(false);
     }
 
-    public void GetDirection(BoardTile tile)
+    public void RegisterTile(BoardTile tile)
     {
         activeTile = tile;
+    }
+
+    public void GetDirection()
+    {
         DirectionPicker.SetActive(true);
     }
 
@@ -111,13 +117,26 @@ public class GameManager : MonoBehaviour
     public void EndTurn()
     {
         activePlayerIndex = (activePlayerIndex + 1) % GlobalVals.Instance.PlayerCount;
-        //StartTurn();
         startWizardPlacement();
     }
 
     private void startWizardPlacement()
     {
         picking = true;
-        NotificationView.DisplayNotification("Place a wizard", 1);
+        NotificationView.DisplayNotification("Place a wizard", 3);
+    }
+
+    public void StartCombat(WizardPiece wizard)
+    {
+        activeWizard = wizard;
+        Combat.Show(wizard);
+    }
+
+    public void EndCombat(bool attack, int bonus)
+    {
+        int toBeat = (attack ? activeWizard.FightStrength : activeWizard.PersuasionStrength) - bonus;
+        int die = (int)(Random.value * 6) + 1;
+
+        activeTile.EndCombat(attack, die > toBeat);
     }
 }

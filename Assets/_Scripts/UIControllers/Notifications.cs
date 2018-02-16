@@ -22,6 +22,7 @@ public class Notifications : MonoBehaviour
     private void Start()
     {
         text = GetComponent<Transform>().GetComponentInChildren<Text>();
+        gameObject.SetActive(false);
     }
 
     public void Show()
@@ -34,10 +35,15 @@ public class Notifications : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public Coroutine DisplayNotification(string notification, float time)
+    public void DisplayNotification(string notification)
     {
         Text = notification;
         Show();
+    }
+
+    public Coroutine DisplayNotification(string notification, float time)
+    {
+        DisplayNotification(notification);
         return StartCoroutine(displayNotification(notification, time));
     }
 
