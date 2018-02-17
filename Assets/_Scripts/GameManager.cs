@@ -18,12 +18,12 @@ public class GameManager : MonoBehaviour
     public GameObject DirectionPicker;
     public CombatHUD Combat;
     public Notifications NotificationView;
-    public PlayerPiece[] Pieces;
+    public PlayerPiece[] PlayerPieces;
     public PlayerPiece ActivePlayer
     {
         get
         {
-            return Pieces[activePlayerIndex];
+            return PlayerPieces[activePlayerIndex];
         }
     }
 
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
     public void StartTurn()
     {
         Text playerName = Constant.Find("PlayerName").GetComponent<Text>();
-        PlayerPiece player = Pieces[activePlayerIndex];
+        PlayerPiece player = PlayerPieces[activePlayerIndex];
         playerName.text = string.Format("Player {0}\nC Tokens:\t{1}\nP Tokens:\t{2}", activePlayerIndex + 1, player.CombatTokens, player.PersuasionTokens);
         player.StartTurn();
         Roller.SetActive(true);
@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
             rollText.text = (i % 6 + 1).ToString();
             yield return new WaitForSeconds(0.05f);
         }
-        Pieces[activePlayerIndex].Rolled(number);
+        PlayerPieces[activePlayerIndex].Rolled(number);
         yield return new WaitForSeconds(0.3f);
         Roller.SetActive(false);
     }

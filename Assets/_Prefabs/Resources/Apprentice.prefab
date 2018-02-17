@@ -140,7 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4760197807781164}
   - component: {fileID: 95686061704545908}
-  - component: {fileID: 114800808442085920}
+  - component: {fileID: 114762447282708272}
   m_Layer: 0
   m_Name: Apprentice
   m_TagString: Untagged
@@ -378,7 +378,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114800808442085920
+--- !u!114 &114762447282708272
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -386,9 +386,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1769756347084926}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a02862ea4d6c44ef08b8e3162baa82cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 831fe90b7c32414468a30deb73ec9be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Apprentice
+  FightStrength: 3
+  PersuasionStrength: 3
+  FightTokenReward: 0
+  PersuasionTokenReward: 0
 --- !u!137 &137944214052958468
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

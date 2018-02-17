@@ -5,8 +5,30 @@ using UnityEngine;
 public class BoardTile : MonoBehaviour
 {
     public BoardTile[] NextTiles;
+    public BoardTile BackLink;
     public GameObject VCam;
     public WizardPiece Wizard;
+    public bool Checkpoint;
+    
+    public int DistanceFromEnd
+    {
+        get
+        {
+            if (NextTiles.Length==0)
+            {
+                return 0;
+            }
+            int minDistance=int.MaxValue;
+            foreach (BoardTile tile in NextTiles)
+            {
+                if (tile.DistanceFromEnd<minDistance)
+                {
+                    minDistance = tile.DistanceFromEnd;
+                }
+            }
+            return minDistance+1;
+        }
+    }
 
     private Transform trans;
 
@@ -24,6 +46,10 @@ public class BoardTile : MonoBehaviour
             playerNodes[i] = trans.Find("PlayerNode" + i);
         }
         playerPieces = new List<PlayerPiece>(GlobalVals.Instance.PlayerCount);
+        foreach (BoardTile tile in NextTiles)
+        {
+            tile.BackLink = this;
+        }
     }
 
     public void RegisterPlayerPiece(PlayerPiece piece)
@@ -77,6 +103,10 @@ public class BoardTile : MonoBehaviour
         {
             GameManager.Instance.RegisterTile(this);
             PlayerPiece piece = other.GetComponent<PlayerPiece>();
+            if (Checkpoint)
+            {
+                piece.LastCheckpoint = this;
+            }
             if (piece.Movement > 0)
             {
                 if (NextTiles.Length == 0)
@@ -116,6 +146,7 @@ public class BoardTile : MonoBehaviour
         wizardTrans.localPosition = wizardNode.localPosition;
         wizardTrans.localEulerAngles = new Vector3(-90, 180, 0);
         Wizard = wizardTrans.GetComponent<WizardPiece>();
+        Wizard.tile = this;
     }
 
     public void StartCombat()
@@ -126,23 +157,23 @@ public class BoardTile : MonoBehaviour
 
     public void EndCombat(bool attack, bool win)
     {
+        PlayerPiece player = GameManager.Instance.ActivePlayer;
         if (win)
         {
-            Wizard.Die();
-            PlayerPiece player = GameManager.Instance.ActivePlayer;
             if (attack)
             {
+                Wizard.Die();
                 player.CombatTokens = Wizard.FightTokenReward;
                 player.PersuasionTokens = Wizard.PersuasionTokenReward;
             }
             else
             {
-                //Evoke Persuasion boon
+                Wizard.PersuasionReward();
             }
         }
         else
         {
-            //Evoke Wizard penalty
+            Wizard.Penalty(player);
             Debug.Log("Lose");
         }
         cleanupCombat();

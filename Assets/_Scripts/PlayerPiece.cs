@@ -10,6 +10,12 @@ public class PlayerPiece : MonoBehaviour
     public int Movement = 0;
     public int PersuasionTokens = 0;
     public int CombatTokens = 0;
+    public BoardTile LastCheckpoint;
+    public int DistanceFromEnd {
+        get {
+            return currentTile.DistanceFromEnd;
+        }
+    }
 
     private Transform trans;
     private NavMeshAgent nav;
@@ -39,6 +45,12 @@ public class PlayerPiece : MonoBehaviour
         {
             nav.updateRotation = true;
         }
+    }
+
+    public void Teleport(Vector3 position)
+    {
+        trans.position = position;
+        SetPosition(position);
     }
 
     public void SetPosition(Vector3 position)

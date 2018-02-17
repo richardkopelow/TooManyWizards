@@ -15,13 +15,13 @@ public class WizardPiece : MonoBehaviour
     public int PersuasionStrength;
     public int FightTokenReward;
     public int PersuasionTokenReward;
+    public BoardTile tile;
 
     private Animator anim;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
-
     }
 
     public void Attack()
@@ -37,6 +37,16 @@ public class WizardPiece : MonoBehaviour
     public void Die()
     {
         Destroy(gameObject);
+    }
+
+    public virtual void Penalty(PlayerPiece player)
+    {
+
+    }
+
+    public virtual void PersuasionReward()
+    {
+
     }
 
 }
