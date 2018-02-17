@@ -19,6 +19,13 @@ public class GameManager : MonoBehaviour
     public CombatHUD Combat;
     public Notifications NotificationView;
     public PlayerPiece[] Pieces;
+    public PlayerPiece ActivePlayer
+    {
+        get
+        {
+            return Pieces[activePlayerIndex];
+        }
+    }
 
     private int tileMask;
     private Transform trans;

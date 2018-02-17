@@ -13,7 +13,6 @@ public class BoardTile : MonoBehaviour
     private Transform wizardNode;
     private Transform[] playerNodes;
     private List<PlayerPiece> playerPieces;
-    private PlayerPiece activePiece;
 
     void Start()
     {
@@ -53,7 +52,6 @@ public class BoardTile : MonoBehaviour
         }
         else
         {
-            activePiece = piece;
             GameManager.Instance.GetDirection();
         }
     }
@@ -70,7 +68,7 @@ public class BoardTile : MonoBehaviour
 
     public void DirectionPicked(int direction)
     {
-        movePiece(activePiece, direction);
+        movePiece(GameManager.Instance.ActivePlayer, direction);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -128,6 +126,31 @@ public class BoardTile : MonoBehaviour
 
     public void EndCombat(bool attack, bool win)
     {
+        if (win)
+        {
+            Wizard.Die();
+            PlayerPiece player = GameManager.Instance.ActivePlayer;
+            if (attack)
+            {
+                player.CombatTokens = Wizard.FightTokenReward;
+                player.PersuasionTokens = Wizard.PersuasionTokenReward;
+            }
+            else
+            {
+                //Evoke Persuasion boon
+            }
+        }
+        else
+        {
+            //Evoke Wizard penalty
+            Debug.Log("Lose");
+        }
+        cleanupCombat();
+    }
+
+    private void cleanupCombat()
+    {
         VCam.SetActive(false);
+        GameManager.Instance.EndTurn();
     }
 }

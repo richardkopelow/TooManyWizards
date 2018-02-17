@@ -13,6 +13,8 @@ public class WizardPiece : MonoBehaviour
     public string Name;
     public int FightStrength;
     public int PersuasionStrength;
+    public int FightTokenReward;
+    public int PersuasionTokenReward;
 
     private Animator anim;
 
