@@ -87,6 +87,7 @@ public class BoardTile : MonoBehaviour
         if (NextTiles.Length > index)
         {
             piece.SetPosition(NextTiles[index].GetComponent<Transform>().position);
+            playerPieces.Remove(piece);
             piece.DeregisterToTile();
             piece.Movement--;
         }
@@ -157,6 +158,8 @@ public class BoardTile : MonoBehaviour
 
     public void EndCombat(bool attack, bool win)
     {
+
+        VCam.SetActive(false);
         PlayerPiece player = GameManager.Instance.ActivePlayer;
         if (win)
         {
@@ -165,6 +168,8 @@ public class BoardTile : MonoBehaviour
                 Wizard.Die();
                 player.CombatTokens = Wizard.FightTokenReward;
                 player.PersuasionTokens = Wizard.PersuasionTokenReward;
+
+                CleanupCombat();
             }
             else
             {
@@ -175,13 +180,13 @@ public class BoardTile : MonoBehaviour
         {
             Wizard.Penalty(player);
             Debug.Log("Lose");
+
+            CleanupCombat();
         }
-        cleanupCombat();
     }
 
-    private void cleanupCombat()
+    public void CleanupCombat()
     {
-        VCam.SetActive(false);
         GameManager.Instance.EndTurn();
     }
 }

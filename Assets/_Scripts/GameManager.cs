@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
                 BoardTile hitTile = hit.transform.GetComponent<BoardTile>();
                 if (hitTile.Wizard == null)
                 {
-                    hitTile.SpawnWizard(WizardPiece.WizardType.Apprentice);
+                    hitTile.SpawnWizard(WizardPiece.WizardType.Warlock);
                     picking = false;
 
                     StartTurn();
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
-        activePlayerIndex = (activePlayerIndex + 1) % GlobalVals.Instance.PlayerCount;
+        activePlayerIndex = (activePlayerIndex + 1) % PlayerPieces.Length;
         startWizardPlacement();
     }
 

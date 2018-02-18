@@ -46,7 +46,7 @@ public class WizardPiece : MonoBehaviour
 
     public virtual void PersuasionReward()
     {
-
+        tile.CleanupCombat();
     }
 
 }
