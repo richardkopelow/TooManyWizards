@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class TeleportWizard : WizardPiece
 {
+    private bool pickingPieces;
+    private int playerLayer;
+    private PlayerPiece[] pickedPieces;
+
+    protected override void Start()
+    {
+        base.Start();
+        playerLayer = LayerMask.GetMask("Player");
+    }
+
+
     public override void Penalty(PlayerPiece player)
     {
         base.Penalty(player);
@@ -12,20 +23,50 @@ public class TeleportWizard : WizardPiece
         foreach (PlayerPiece piece in GameManager.Instance.PlayerPieces)
         {
             int d = piece.DistanceFromEnd;
-            if (d<minDistance)
+            if (d < minDistance)
             {
                 minDistance = d;
                 minPlayer = piece;
             }
         }
-        Vector3 minPosition = minPlayer.GetComponent<Transform>().position;
-        minPlayer.Teleport(player.GetComponent<Transform>().position);
-        player.Teleport(minPosition);
+        swapPlayers(player, minPlayer);
+    }
+
+    private void swapPlayers(PlayerPiece p1, PlayerPiece p2)
+    {
+        Vector3 position2 = p2.GetComponent<Transform>().position;
+        p2.Teleport(p1.GetComponent<Transform>().position);
+        p1.Teleport(position2);
     }
 
     public override void PersuasionReward()
     {
-        base.PersuasionReward();
-        
+        //Pick Player
+        pickingPieces = true;
+        pickedPieces = new PlayerPiece[2];
+    }
+
+    private void Update()
+    {
+        if (pickingPieces && Input.GetMouseButton(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 400, playerLayer))
+            {
+                PlayerPiece hitPlayer = hit.transform.GetComponent<PlayerPiece>();
+                if (hitPlayer != null)
+                {
+                    int index = pickedPieces[0] == null ? 0 : 1;
+                    pickedPieces[index] = hitPlayer;
+                    if (index == 1)
+                    {
+                        swapPlayers(pickedPieces[0], pickedPieces[1]);
+                        
+                        base.PersuasionReward();
+                    }
+                }
+            }
+        }
     }
 }
