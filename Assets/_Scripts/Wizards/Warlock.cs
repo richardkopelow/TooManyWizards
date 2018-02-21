@@ -5,6 +5,13 @@ using UnityEngine;
 public class Warlock : WizardPiece
 {
     private bool pickingPieces;
+    private int playerLayer;
+
+    protected override void Start()
+    {
+        base.Start();
+        playerLayer = LayerMask.GetMask("Player");
+    }
 
     public override void Penalty(PlayerPiece player)
     {
@@ -25,7 +32,7 @@ public class Warlock : WizardPiece
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 400))
+            if (Physics.Raycast(ray, out hit, 400, playerLayer))
             {
                 PlayerPiece hitPlayer = hit.transform.GetComponent<PlayerPiece>();
                 if (hitPlayer!=null)

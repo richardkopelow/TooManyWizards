@@ -19,7 +19,7 @@ public class WizardPiece : MonoBehaviour
 
     private Animator anim;
 
-    private void Start()
+    protected virtual void Start()
     {
         anim = GetComponent<Animator>();
     }
