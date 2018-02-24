@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
                 BoardTile hitTile = hit.transform.GetComponent<BoardTile>();
                 if (hitTile.Wizard == null)
                 {
-                    hitTile.SpawnWizard(WizardPiece.WizardType.Warlock);
+                    hitTile.SpawnWizard(WizardPiece.WizardType.Teleport);
                     picking = false;
 
                     StartTurn();

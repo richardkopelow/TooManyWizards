@@ -9,24 +9,24 @@ public class BoardTile : MonoBehaviour
     public GameObject VCam;
     public WizardPiece Wizard;
     public bool Checkpoint;
-    
+
     public int DistanceFromEnd
     {
         get
         {
-            if (NextTiles.Length==0)
+            if (NextTiles.Length == 0)
             {
                 return 0;
             }
-            int minDistance=int.MaxValue;
+            int minDistance = int.MaxValue;
             foreach (BoardTile tile in NextTiles)
             {
-                if (tile.DistanceFromEnd<minDistance)
+                if (tile.DistanceFromEnd < minDistance)
                 {
                     minDistance = tile.DistanceFromEnd;
                 }
             }
-            return minDistance+1;
+            return minDistance + 1;
         }
     }
 
@@ -87,8 +87,6 @@ public class BoardTile : MonoBehaviour
         if (NextTiles.Length > index)
         {
             piece.SetPosition(NextTiles[index].GetComponent<Transform>().position);
-            playerPieces.Remove(piece);
-            piece.DeregisterToTile();
             piece.Movement--;
         }
     }
@@ -121,7 +119,7 @@ public class BoardTile : MonoBehaviour
             }
             else
             {
-                if (piece.Started)
+                if (!piece.Forced && piece.Started)
                 {
                     if (Wizard != null)
                     {
@@ -134,8 +132,19 @@ public class BoardTile : MonoBehaviour
                         piece.EndTurn();
                     }
                 }
+                piece.Forced = false;
                 RegisterPlayerPiece(piece);
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "PlayerPiece")
+        {
+            PlayerPiece piece = other.GetComponent<PlayerPiece>();
+            playerPieces.Remove(piece);
+            piece.DeregisterToTile();
         }
     }
 

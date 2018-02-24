@@ -7,12 +7,15 @@ public class PlayerPiece : MonoBehaviour
 {
     public GameObject VCam;
     public bool Started = false;
+    public bool Forced = false;
     public int Movement = 0;
     public int PersuasionTokens = 0;
     public int CombatTokens = 0;
     public BoardTile LastCheckpoint;
-    public int DistanceFromEnd {
-        get {
+    public int DistanceFromEnd
+    {
+        get
+        {
             return currentTile.DistanceFromEnd;
         }
     }
@@ -49,6 +52,7 @@ public class PlayerPiece : MonoBehaviour
 
     public void Teleport(Vector3 position)
     {
+        Forced = true;
         trans.position = position;
         SetPosition(position);
     }

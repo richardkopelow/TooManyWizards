@@ -18,18 +18,21 @@ public class TeleportWizard : WizardPiece
     public override void Penalty(PlayerPiece player)
     {
         base.Penalty(player);
-        PlayerPiece minPlayer = GameManager.Instance.ActivePlayer;
-        int minDistance = int.MaxValue;
+        PlayerPiece lastPlayer = GameManager.Instance.ActivePlayer;
+        int lastDistance = 0;
         foreach (PlayerPiece piece in GameManager.Instance.PlayerPieces)
         {
             int d = piece.DistanceFromEnd;
-            if (d < minDistance)
+            if (d > lastDistance)
             {
-                minDistance = d;
-                minPlayer = piece;
+                lastDistance = d;
+                lastPlayer = piece;
             }
         }
-        swapPlayers(player, minPlayer);
+
+        Destroy(gameObject);
+        swapPlayers(player, lastPlayer);
+        //TODO: do something about about ties
     }
 
     private void swapPlayers(PlayerPiece p1, PlayerPiece p2)
@@ -41,7 +44,7 @@ public class TeleportWizard : WizardPiece
 
     public override void PersuasionReward()
     {
-        //Pick Player
+        //Pick Players
         pickingPieces = true;
         pickedPieces = new PlayerPiece[2];
     }
@@ -62,7 +65,9 @@ public class TeleportWizard : WizardPiece
                     if (index == 1)
                     {
                         swapPlayers(pickedPieces[0], pickedPieces[1]);
-                        
+
+                        tile.Wizard = null;
+                        Destroy(gameObject);
                         base.PersuasionReward();
                     }
                 }

@@ -8,7 +8,7 @@ public class WizardPiece : MonoBehaviour
     {
         Apprentice,
         Warlock,
-        Teleportation
+        Teleport
     }
     public string Name;
     public int FightStrength;
