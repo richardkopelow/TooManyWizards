@@ -529,7 +529,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6087072, y: 1.6087053, z: 1}
+  m_Size: {x: 2.5, y: 2.5, z: 1}
   m_Center: {x: 0.00000050663954, y: 0.0000015199187, z: 0.5}
 --- !u!95 &95847308508550478
 Animator:
@@ -714,8 +714,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NextTiles:
   - {fileID: 0}
+  BackLink: {fileID: 0}
   VCam: {fileID: 1178975269727342}
   Wizard: {fileID: 0}
+  Checkpoint: 0
 --- !u!114 &114322129756535314
 MonoBehaviour:
   m_ObjectHideFlags: 1

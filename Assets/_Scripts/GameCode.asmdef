@@ -1,0 +1,8 @@
+{
+    "name": "GameCode",
+    "references": [
+        "SDKS"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

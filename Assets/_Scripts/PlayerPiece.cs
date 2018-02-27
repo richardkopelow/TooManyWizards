@@ -96,6 +96,7 @@ public class PlayerPiece : MonoBehaviour
     public void StartTurn()
     {
         VCam.SetActive(true);
+        currentTile.StartTurn();
     }
 
     public void EndTurn()

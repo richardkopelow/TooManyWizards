@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     private BoardTile activeTile;
     private WizardPiece activeWizard;
     private bool picking;
+    private WizardPiece.WizardType wType;
 
     #region UnityMagic
     void Start()
@@ -62,7 +63,7 @@ public class GameManager : MonoBehaviour
                 BoardTile hitTile = hit.transform.GetComponent<BoardTile>();
                 if (hitTile.Wizard == null)
                 {
-                    hitTile.SpawnWizard(WizardPiece.WizardType.Teleport);
+                    hitTile.SpawnWizard(wType);
                     picking = false;
 
                     StartTurn();
@@ -130,7 +131,24 @@ public class GameManager : MonoBehaviour
     private void startWizardPlacement()
     {
         picking = true;
-        NotificationView.DisplayNotification("Place a wizard", 3);
+        int roll = (int)(Random.value * 6);
+        
+        if (roll < 1)
+        {
+            wType = WizardPiece.WizardType.Teleport;
+        }
+        else
+        {
+            if (roll < 3)
+            {
+                wType = WizardPiece.WizardType.Warlock;
+            }
+            else
+            {
+                wType = WizardPiece.WizardType.Apprentice;
+            }
+        }
+        NotificationView.DisplayNotification("Place a "+wType.GetName()+" wizard", 6);
     }
 
     public void StartCombat(WizardPiece wizard)

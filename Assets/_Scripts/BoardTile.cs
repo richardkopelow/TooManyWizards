@@ -198,4 +198,9 @@ public class BoardTile : MonoBehaviour
     {
         GameManager.Instance.EndTurn();
     }
+
+    public void StartTurn()
+    {
+        GameManager.Instance.RegisterTile(this);
+    }
 }
