@@ -984,6 +984,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VCam: {fileID: 1834891403788652}
+  PlayerIndex: 0
+  Class: 0
   Started: 0
   Forced: 0
   Movement: 0

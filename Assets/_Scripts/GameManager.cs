@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
             trans = GetComponent<Transform>();
             tileMask = LayerMask.GetMask("Tile");
             this.ExecuteDelayed(init, 0.2f);
+            
         }
         else
         {
@@ -163,5 +165,16 @@ public class GameManager : MonoBehaviour
         int die = (int)(Random.value * 6) + 1;
 
         activeTile.EndCombat(attack, die > toBeat);
+    }
+
+    public void EndGame(int playerIndex)
+    {
+        StartCoroutine(endGame(playerIndex));
+    }
+
+    private IEnumerator endGame(int playerIndex)
+    {
+        yield return NotificationView.DisplayNotification(string.Format("Player {0} is the winner!", playerIndex + 1), 5);
+        SceneManager.LoadScene("MainMenu");
     }
 }

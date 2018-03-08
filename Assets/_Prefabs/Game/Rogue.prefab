@@ -926,7 +926,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VCam: {fileID: 1368252175406262}
+  PlayerIndex: 0
+  Class: 0
   Started: 0
+  Forced: 0
   Movement: 0
   PersuasionTokens: 4
   CombatTokens: 2

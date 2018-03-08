@@ -5,7 +5,18 @@ using UnityEngine.AI;
 
 public class PlayerPiece : MonoBehaviour
 {
+    public enum ClassEnum
+    {
+        Rogue,
+        Ranger,
+        Bard,
+        Barbarian,
+        None
+    }
+
     public GameObject VCam;
+    public int PlayerIndex = 0;
+    public ClassEnum Class;
     public bool Started = false;
     public bool Forced = false;
     public int Movement = 0;
@@ -102,5 +113,26 @@ public class PlayerPiece : MonoBehaviour
     public void EndTurn()
     {
         VCam.SetActive(false);
+    }
+
+    public void Attack()
+    {
+        anim.SetBool("Attack", true);
+    }
+
+    public void AttackDone()
+    {
+        anim.SetBool("Attack", false);
+        currentTile.AttackDone();
+    }
+
+    public void Persuade()
+    {
+
+    }
+
+    public void PersuasionDone()
+    {
+        currentTile.PersuasionDone();
     }
 }

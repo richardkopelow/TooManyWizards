@@ -167,35 +167,51 @@ public class BoardTile : MonoBehaviour
 
     public void EndCombat(bool attack, bool win)
     {
-
-        VCam.SetActive(false);
         PlayerPiece player = GameManager.Instance.ActivePlayer;
         if (win)
         {
             if (attack)
             {
-                Wizard.Die();
-                player.CombatTokens = Wizard.FightTokenReward;
-                player.PersuasionTokens = Wizard.PersuasionTokenReward;
-
-                CleanupCombat();
+                player.Attack();
             }
             else
             {
-                Wizard.PersuasionReward();
+                player.Persuade();
             }
         }
         else
         {
-            Wizard.Penalty(player);
-            Debug.Log("Lose");
-
-            CleanupCombat();
+            Wizard.Attack();
         }
+    }
+
+    public void AttackDone()
+    {
+        PlayerPiece player = GameManager.Instance.ActivePlayer;
+        Wizard.Die();
+        player.CombatTokens = Wizard.FightTokenReward;
+        player.PersuasionTokens = Wizard.PersuasionTokenReward;
+
+        CleanupCombat();
+    }
+
+    public void PersuasionDone()
+    {
+        Wizard.PersuasionReward();
+    }
+
+    public void WizardAttackDone()
+    {
+        PlayerPiece player = GameManager.Instance.ActivePlayer;
+        Wizard.Penalty(player);
+        Debug.Log("Lose");
+
+        CleanupCombat();
     }
 
     public void CleanupCombat()
     {
+        VCam.SetActive(false);
         GameManager.Instance.EndTurn();
     }
 

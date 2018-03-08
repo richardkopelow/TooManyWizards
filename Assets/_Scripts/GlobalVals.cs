@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class GlobalVals
 {
     private static GlobalVals _instance;
@@ -14,10 +16,17 @@ public class GlobalVals
     }
 
     public int PlayerCount { get; set; }
+    public List<PlayerPiece.ClassEnum> PlayerClasses { get; set; }
 
     private GlobalVals()
     {
         PlayerCount = 1;
+        PlayerClasses = new List<PlayerPiece.ClassEnum>() {
+            PlayerPiece.ClassEnum.Rogue,
+            PlayerPiece.ClassEnum.Ranger,
+            PlayerPiece.ClassEnum.Bard,
+            PlayerPiece.ClassEnum.Barbarian
+        };
     }
 
     public void Reset()

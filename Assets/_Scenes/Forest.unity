@@ -3931,21 +3931,6 @@ Prefab:
       propertyPath: NextTiles.Array.data[0]
       value: 
       objectReference: {fileID: 1678676062}
-    - target: {fileID: 65942156555247438, guid: 3cc3645968f5b4a5e805affa9628484a,
-        type: 2}
-      propertyPath: m_Center.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 65984720711618130, guid: 3cc3645968f5b4a5e805affa9628484a,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 65984720711618130, guid: 3cc3645968f5b4a5e805affa9628484a,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 2.2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3cc3645968f5b4a5e805affa9628484a, type: 2}
   m_IsPrefabParent: 0
