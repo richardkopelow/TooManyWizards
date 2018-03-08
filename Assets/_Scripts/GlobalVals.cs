@@ -22,10 +22,10 @@ public class GlobalVals
     {
         PlayerCount = 1;
         PlayerClasses = new List<PlayerPiece.ClassEnum>() {
-            PlayerPiece.ClassEnum.Rogue,
-            PlayerPiece.ClassEnum.Ranger,
-            PlayerPiece.ClassEnum.Bard,
-            PlayerPiece.ClassEnum.Barbarian
+            PlayerPiece.ClassEnum.None,
+            PlayerPiece.ClassEnum.None,
+            PlayerPiece.ClassEnum.None,
+            PlayerPiece.ClassEnum.None
         };
     }
 

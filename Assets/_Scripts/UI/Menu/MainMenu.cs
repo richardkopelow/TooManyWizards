@@ -14,4 +14,20 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void CheckStart()
+    {
+        bool good = true;
+        foreach (var item in GlobalVals.Instance.PlayerClasses)
+        {
+            if (item== PlayerPiece.ClassEnum.None)
+            {
+                good = false;
+            }
+        }
+        if (good)
+        {
+            Play();
+        }
+    }
 }

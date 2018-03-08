@@ -8,50 +8,61 @@ public class CharacterSelector : MonoBehaviour
     public PlayerPiece.ClassEnum[] Classes;
     public Texture[] CharacterRenderTextures;
     public int PlayerIndex;
+    public int CharacterIndex;
 
-    private int characterIndex;
     private RawImage characterImage;
+    public Text acceptButtonText;
+    private bool accepted;
 
     private void Start()
     {
-        characterImage = transform.Find("CharacterImage").GetComponent<RawImage>();
+        Transform trans = transform;
+        characterImage = trans.Find("CharacterImage").GetComponent<RawImage>();
+        acceptButtonText = trans.Find("AcceptButton/Text").GetComponent<Text>();
+        SetupDisplay();
     }
 
     public void Left()
     {
-        characterIndex--;
-        if (characterIndex < 0)
+        CharacterIndex--;
+        if (CharacterIndex < 0)
         {
-            characterIndex = Classes.Length - 1; ;
+            CharacterIndex = Classes.Length - 1; ;
         }
         SetupDisplay();
     }
 
     public void Right()
     {
-        characterIndex++;
-        if (characterIndex >= Classes.Length)
+        CharacterIndex++;
+        if (CharacterIndex >= Classes.Length)
         {
-            characterIndex = 0;
+            CharacterIndex = 0;
         }
         SetupDisplay();
     }
 
-    public void Accept()
+    public void OnReadyClick()
     {
-        if (!GlobalVals.Instance.PlayerClasses.Contains(Classes[characterIndex]))
+        if (accepted)
         {
-            GlobalVals.Instance.PlayerClasses[PlayerIndex] = Classes[characterIndex];
+            GlobalVals.Instance.PlayerClasses[PlayerIndex] = PlayerPiece.ClassEnum.None;
+            acceptButtonText.text = "Ready";
+            accepted = false;
         }
-    }
-
-    public void UnAccept()
-    {
-        GlobalVals.Instance.PlayerClasses[PlayerIndex] = PlayerPiece.ClassEnum.None;
+        else
+        {
+            if (!GlobalVals.Instance.PlayerClasses.Contains(Classes[CharacterIndex]))
+            {
+                GlobalVals.Instance.PlayerClasses[PlayerIndex] = Classes[CharacterIndex];
+                acceptButtonText.text = "Unready";
+                accepted = true;
+            }
+        }
     }
 
     public void SetupDisplay()
     {
-        characterImage.texture = CharacterRenderTextures[characterIndex];
+        characterImage.texture = CharacterRenderTextures[CharacterIndex];
     }
 }
