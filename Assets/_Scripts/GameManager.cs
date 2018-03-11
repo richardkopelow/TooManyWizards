@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
 
     private int tileMask;
     private Transform trans;
-    private bool playing;
     private int activePlayerIndex = 0;
     private BoardTile activeTile;
     private WizardPiece activeWizard;
@@ -46,6 +45,20 @@ public class GameManager : MonoBehaviour
             trans = GetComponent<Transform>();
             tileMask = LayerMask.GetMask("Tile");
             this.ExecuteDelayed(init, 0.2f);
+
+            PlayerPieces = new PlayerPiece[4];
+            List<PlayerPiece.ClassEnum> classes = GlobalVals.Instance.PlayerClasses;
+            PlayerPiece[] playerPieces = FindObjectsOfType<PlayerPiece>();
+            for (int i = 0; i < classes.Count; i++)
+            {
+                for (int j = 0; j < playerPieces.Length; j++)
+                {
+                    if (playerPieces[j].Class == classes[i])
+                    {
+                        PlayerPieces[i] = playerPieces[j];
+                    }
+                }
+            }
             
         }
         else

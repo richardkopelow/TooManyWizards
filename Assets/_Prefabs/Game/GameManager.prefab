@@ -1220,11 +1220,7 @@ MonoBehaviour:
   DirectionPicker: {fileID: 1157595668224582}
   Combat: {fileID: 114595952150310034}
   NotificationView: {fileID: 114597646510501668}
-  PlayerPieces:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  PlayerPieces: []
 --- !u!114 &114498498305439610
 MonoBehaviour:
   m_ObjectHideFlags: 1
