@@ -202,7 +202,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.9807692
-        functionName: PersuadeDone
+        functionName: PersuasionDone
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

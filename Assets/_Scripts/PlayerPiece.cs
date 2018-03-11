@@ -35,18 +35,32 @@ public class PlayerPiece : MonoBehaviour
     private NavMeshAgent nav;
     private Animator anim; 
     private BoardTile currentTile;
+    private BoardTile lastTile;
     private Vector3 lookatTarget;
+    private float[] speeds;
+    private int speedsIndex;
 
     void Start()
     {
         trans = GetComponent<Transform>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+
+        speeds = new float[5];
     }
 
     void Update()
     {
-        anim.SetFloat("Speed",nav.velocity.magnitude);
+        speeds[speedsIndex] = nav.velocity.magnitude;
+        speedsIndex++;
+        speedsIndex %= speeds.Length;
+        float averageSpeed = 0;
+        for (int i = 0; i < speeds.Length; i++)
+        {
+            averageSpeed += speeds[i];
+        }
+        averageSpeed /= speeds.Length;
+        anim.SetFloat("Speed", averageSpeed);
         if (nav.remainingDistance<nav.stoppingDistance)
         {
             nav.updateRotation = false;
@@ -90,7 +104,14 @@ public class PlayerPiece : MonoBehaviour
 
     public void DeregisterToTile()
     {
-        currentTile = null;
+        if (currentTile == lastTile)
+        {
+            currentTile = null;
+        }
+        else
+        {
+            lastTile = currentTile;
+        }
     }
 
     public void Rolled(int movement)
@@ -128,11 +149,12 @@ public class PlayerPiece : MonoBehaviour
 
     public void Persuade()
     {
-
+        anim.SetBool("Talk", true);
     }
 
     public void PersuasionDone()
     {
+        anim.SetBool("Talk", false);
         currentTile.PersuasionDone();
     }
 }

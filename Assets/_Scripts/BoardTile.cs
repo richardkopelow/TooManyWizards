@@ -40,8 +40,8 @@ public class BoardTile : MonoBehaviour
     {
         trans = GetComponent<Transform>();
         wizardNode = trans.Find("WizardNode");
-        playerNodes = new Transform[4];
-        for (int i = 0; i < 4; i++)
+        playerNodes = new Transform[5];
+        for (int i = 0; i < 5; i++)
         {
             playerNodes[i] = trans.Find("PlayerNode" + i);
         }
@@ -197,6 +197,7 @@ public class BoardTile : MonoBehaviour
 
     public void PersuasionDone()
     {
+        VCam.SetActive(false);
         Wizard.PersuasionReward();
     }
 

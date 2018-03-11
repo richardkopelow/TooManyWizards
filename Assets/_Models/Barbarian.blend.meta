@@ -1,30 +1,30 @@
 fileFormatVersion: 2
-guid: 023a35429a507274489c5a903c31fb1f
-timeCreated: 1520572817
+guid: e670142ddd377bc44bde1f434797f190
+timeCreated: 1520723693
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: Armature
     100002: //RootNode
-    100004: Bard
+    100004: Barbarian
     100006: Foot_IK_L
     100008: Foot_IK_R
     100010: Foot_L
     100012: Foot_R
     100014: ForeArm_L
     100016: ForeArm_R
-    100018: Head
-    100020: HindArm_L
-    100022: HindArm_R
-    100024: Hip
-    100026: Hip_L
-    100028: Hip_R
-    100030: Knee_IK_L
-    100032: Knee_IK_R
-    100034: LowerLeg_L
-    100036: LowerLeg_R
-    100038: Lute
+    100018: Hammer
+    100020: Head
+    100022: HindArm_L
+    100024: HindArm_R
+    100026: Hip
+    100028: Hip_L
+    100030: Hip_R
+    100032: Knee_IK_L
+    100034: Knee_IK_R
+    100036: LowerLeg_L
+    100038: LowerLeg_R
     100040: Neck
     100042: Root
     100044: Shoulder_L
@@ -35,24 +35,24 @@ ModelImporter:
     100054: UpperLeg_R
     400000: Armature
     400002: //RootNode
-    400004: Bard
+    400004: Barbarian
     400006: Foot_IK_L
     400008: Foot_IK_R
     400010: Foot_L
     400012: Foot_R
     400014: ForeArm_L
     400016: ForeArm_R
-    400018: Head
-    400020: HindArm_L
-    400022: HindArm_R
-    400024: Hip
-    400026: Hip_L
-    400028: Hip_R
-    400030: Knee_IK_L
-    400032: Knee_IK_R
-    400034: LowerLeg_L
-    400036: LowerLeg_R
-    400038: Lute
+    400018: Hammer
+    400020: Head
+    400022: HindArm_L
+    400024: HindArm_R
+    400026: Hip
+    400028: Hip_L
+    400030: Hip_R
+    400032: Knee_IK_L
+    400034: Knee_IK_R
+    400036: LowerLeg_L
+    400038: LowerLeg_R
     400040: Neck
     400042: Root
     400044: Shoulder_L
@@ -62,13 +62,13 @@ ModelImporter:
     400052: UpperLeg_L
     400054: UpperLeg_R
     2100000: Material__TooManyWizardsColor_png_001
-    4300000: Bard
+    4300000: Barbarian
     7400000: Attack
     7400002: Idle
     7400004: Talk
     7400006: Walk
     9500000: //RootNode
-    13700000: Bard
+    13700000: Barbarian
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -105,7 +105,7 @@ ModelImporter:
       name: Attack
       takeName: Attack
       firstFrame: 0
-      lastFrame: 49
+      lastFrame: 61
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -125,7 +125,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.98351645
+      - time: 1
         functionName: AttackDone
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -140,7 +140,7 @@ ModelImporter:
       name: Idle
       takeName: Idle
       firstFrame: 0
-      lastFrame: 299
+      lastFrame: 77
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -168,7 +168,7 @@ ModelImporter:
       name: Talk
       takeName: Talk
       firstFrame: 0
-      lastFrame: 80
+      lastFrame: 56
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -188,7 +188,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.9807692
+      - time: 1
         functionName: PersuasionDone
         data: 
         objectReferenceParameter: {instanceID: 0}
