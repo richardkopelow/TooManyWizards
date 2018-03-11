@@ -106,34 +106,35 @@ public class BoardTile : MonoBehaviour
             {
                 piece.LastCheckpoint = this;
             }
-            if (piece.Movement > 0)
+            if (NextTiles.Length == 0)
             {
-                if (NextTiles.Length == 0)
-                {
-                    //End Game
-                }
-                else
-                {
-                    MovePiece(piece);
-                }
+                GameManager.Instance.EndGame(piece.PlayerIndex);
             }
             else
             {
-                if (!piece.Forced && piece.Started)
+                if (piece.Movement > 0)
                 {
-                    if (Wizard != null)
-                    {
-                        StartCombat();
-                        piece.EndTurn();
-                    }
-                    else
-                    {
-                        GameManager.Instance.EndTurn();
-                        piece.EndTurn();
-                    }
+
+                    MovePiece(piece);
                 }
-                piece.Forced = false;
-                RegisterPlayerPiece(piece);
+                else
+                {
+                    if (!piece.Forced && piece.Started)
+                    {
+                        if (Wizard != null)
+                        {
+                            StartCombat();
+                            piece.EndTurn();
+                        }
+                        else
+                        {
+                            GameManager.Instance.EndTurn();
+                            piece.EndTurn();
+                        }
+                    }
+                    piece.Forced = false;
+                    RegisterPlayerPiece(piece);
+                }
             }
         }
     }
@@ -189,8 +190,8 @@ public class BoardTile : MonoBehaviour
     {
         PlayerPiece player = GameManager.Instance.ActivePlayer;
         Wizard.Die();
-        player.CombatTokens = Wizard.FightTokenReward;
-        player.PersuasionTokens = Wizard.PersuasionTokenReward;
+        player.CombatTokens += Wizard.FightTokenReward;
+        player.PersuasionTokens += Wizard.PersuasionTokenReward;
 
         CleanupCombat();
     }

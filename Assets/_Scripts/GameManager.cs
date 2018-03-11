@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
                     if (playerPieces[j].Class == classes[i])
                     {
                         PlayerPieces[i] = playerPieces[j];
+                        playerPieces[i].PlayerIndex = i;
                     }
                 }
             }

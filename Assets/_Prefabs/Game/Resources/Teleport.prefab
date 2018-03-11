@@ -393,7 +393,7 @@ MonoBehaviour:
   FightStrength: 4
   PersuasionStrength: 5
   FightTokenReward: 0
-  PersuasionTokenReward: 0
+  PersuasionTokenReward: 1
   tile: {fileID: 0}
 --- !u!137 &137991010440368750
 SkinnedMeshRenderer:

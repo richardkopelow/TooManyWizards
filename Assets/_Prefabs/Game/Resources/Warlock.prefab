@@ -392,7 +392,7 @@ MonoBehaviour:
   Name: Warlock
   FightStrength: 5
   PersuasionStrength: 4
-  FightTokenReward: 0
+  FightTokenReward: 1
   PersuasionTokenReward: 0
   tile: {fileID: 0}
 --- !u!137 &137405177087159026

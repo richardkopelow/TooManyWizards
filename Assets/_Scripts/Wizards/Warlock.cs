@@ -28,7 +28,7 @@ public class Warlock : WizardPiece
 
     private void Update()
     {
-        if (pickingPieces&& Input.GetMouseButton(0))
+        if (pickingPieces && Input.GetMouseButton(0))
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
