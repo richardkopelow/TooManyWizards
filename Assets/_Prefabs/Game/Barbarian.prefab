@@ -65,6 +65,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4444106469051188}
   - component: {fileID: 114733265309217666}
+  - component: {fileID: 114084574413139002}
   m_Layer: 9
   m_Name: VCam
   m_TagString: Untagged
@@ -304,7 +305,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1738592107211554
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
@@ -599,7 +600,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4410694321029292
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1738592107211554}
@@ -924,7 +925,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114049695607548380
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1738592107211554}
@@ -948,7 +949,7 @@ MonoBehaviour:
   m_BiasY: 0
 --- !u!114 &114077173291292500
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1738592107211554}
@@ -965,9 +966,32 @@ MonoBehaviour:
   m_PitchDamping: 0
   m_YawDamping: 7
   m_RollDamping: 0
---- !u!114 &114113689866608428
+--- !u!114 &114084574413139002
 MonoBehaviour:
   m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1124152064493898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e501d18bb52cf8c40b1853ca4904654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 2048
+  m_IgnoreTag: 
+  m_MinimumDistanceFromTarget: 0.1
+  m_AvoidObstacles: 1
+  m_DistanceLimit: 0
+  m_CameraRadius: 1
+  m_Strategy: 0
+  m_MaximumEffort: 4
+  m_Damping: 1
+  m_OptimalTargetDistance: 0
+--- !u!114 &114113689866608428
+MonoBehaviour:
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1738592107211554}
