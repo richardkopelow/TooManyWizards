@@ -138,23 +138,21 @@ public class PlayerPiece : MonoBehaviour
 
     public void Attack()
     {
-        anim.SetBool("Attack", true);
+        anim.SetTrigger("Attack");
     }
 
     public void AttackDone()
     {
-        anim.SetBool("Attack", false);
         currentTile.AttackDone();
     }
 
     public void Persuade()
     {
-        anim.SetBool("Talk", true);
+        anim.SetTrigger("Talk");
     }
 
     public void PersuasionDone()
     {
-        anim.SetBool("Talk", false);
         currentTile.PersuasionDone();
     }
 }

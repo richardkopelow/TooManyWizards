@@ -26,12 +26,11 @@ public class WizardPiece : MonoBehaviour
 
     public void Attack()
     {
-        anim.SetBool("Attack", true);
+        anim.SetTrigger("Attack");
     }
 
     public void AttackFinished()
     {
-        anim.SetBool("Attack", false);
         tile.WizardAttackDone();
     }
 
