@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class BoardTile : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class BoardTile : MonoBehaviour
     }
 
     private Transform trans;
+    private PlayableDirector director;
 
     private Transform wizardNode;
     private Transform[] playerNodes;
@@ -39,6 +41,7 @@ public class BoardTile : MonoBehaviour
     void Start()
     {
         trans = GetComponent<Transform>();
+        director = GetComponent<PlayableDirector>();
         wizardNode = trans.Find("WizardNode");
         playerNodes = new Transform[5];
         for (int i = 0; i < 5; i++)
@@ -87,7 +90,6 @@ public class BoardTile : MonoBehaviour
         if (NextTiles.Length > index)
         {
             piece.SetPosition(NextTiles[index].GetComponent<Transform>().position);
-            piece.Movement--;
         }
     }
 
@@ -112,27 +114,13 @@ public class BoardTile : MonoBehaviour
             }
             else
             {
+                piece.Movement--;
                 if (piece.Movement > 0)
                 {
-
                     MovePiece(piece);
                 }
                 else
                 {
-                    if (!piece.Forced && piece.Started)
-                    {
-                        if (Wizard != null)
-                        {
-                            StartCombat();
-                            piece.EndTurn();
-                        }
-                        else
-                        {
-                            GameManager.Instance.EndTurn();
-                            piece.EndTurn();
-                        }
-                    }
-                    piece.Forced = false;
                     RegisterPlayerPiece(piece);
                 }
             }
@@ -160,18 +148,23 @@ public class BoardTile : MonoBehaviour
         Wizard.tile = this;
     }
 
-    public void StartCombat()
+    public Coroutine Combat()
     {
         VCam.SetActive(true);
-        GameManager.Instance.StartCombat(Wizard);
+
+        return StartCoroutine(combat());
+
     }
 
-    public void EndCombat(bool attack, bool win)
+    private IEnumerator combat()
     {
+        AttackResult attackRes = new AttackResult();
+        yield return GameManager.Instance.RunCombat(attackRes,Wizard);
+
         PlayerPiece player = GameManager.Instance.ActivePlayer;
-        if (win)
+        if (attackRes.Win)
         {
-            if (attack)
+            if (attackRes.Attack)
             {
                 player.Attack();
             }
@@ -184,31 +177,32 @@ public class BoardTile : MonoBehaviour
         {
             Wizard.Attack();
         }
-    }
 
-    public void AttackDone()
-    {
-        PlayerPiece player = GameManager.Instance.ActivePlayer;
-        Wizard.Die();
-        player.CombatTokens += Wizard.FightTokenReward;
-        player.PersuasionTokens += Wizard.PersuasionTokenReward;
+        yield return new WaitWhile(() => director.state == PlayState.Playing);
 
-        CleanupCombat();
-    }
+        if (attackRes.Win)
+        {
+            if (attackRes.Attack)
+            {
+                Wizard.Die();
+                player.CombatTokens += Wizard.FightTokenReward;
+                player.PersuasionTokens += Wizard.PersuasionTokenReward;
 
-    public void PersuasionDone()
-    {
-        VCam.SetActive(false);
-        Wizard.PersuasionReward();
-    }
+                CleanupCombat();
+            }
+            else
+            {
+                VCam.SetActive(false);
+                Wizard.PersuasionReward();
+            }
+        }
+        else
+        {
+            Wizard.Penalty(player);
+            Debug.Log("Lose");
 
-    public void WizardAttackDone()
-    {
-        PlayerPiece player = GameManager.Instance.ActivePlayer;
-        Wizard.Penalty(player);
-        Debug.Log("Lose");
-
-        CleanupCombat();
+            CleanupCombat();
+        }
     }
 
     public void CleanupCombat()

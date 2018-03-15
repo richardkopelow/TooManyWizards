@@ -114,10 +114,16 @@ public class PlayerPiece : MonoBehaviour
         }
     }
 
-    public void Rolled(int movement)
+    public Coroutine Move(int movement)
     {
         Movement = movement;
         currentTile.MovePiece(this);
+        return StartCoroutine(move());
+    }
+
+    private IEnumerator move()
+    {
+        yield return new WaitUntil(() => Movement == 0);
     }
 
     public void StartCombat()
@@ -131,28 +137,8 @@ public class PlayerPiece : MonoBehaviour
         currentTile.StartTurn();
     }
 
-    public void EndTurn()
+    public void DisableCamera()
     {
         VCam.SetActive(false);
-    }
-
-    public void Attack()
-    {
-        anim.SetTrigger("Attack");
-    }
-
-    public void AttackDone()
-    {
-        currentTile.AttackDone();
-    }
-
-    public void Persuade()
-    {
-        anim.SetTrigger("Talk");
-    }
-
-    public void PersuasionDone()
-    {
-        currentTile.PersuasionDone();
     }
 }

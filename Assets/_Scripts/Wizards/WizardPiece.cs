@@ -24,16 +24,6 @@ public class WizardPiece : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void Attack()
-    {
-        anim.SetTrigger("Attack");
-    }
-
-    public void AttackFinished()
-    {
-        tile.WizardAttackDone();
-    }
-
     public void Die()
     {
         Destroy(gameObject);
@@ -44,9 +34,14 @@ public class WizardPiece : MonoBehaviour
 
     }
 
-    public virtual void PersuasionReward()
+    public virtual Coroutine PersuasionReward()
     {
-        tile.CleanupCombat();
+        return StartCoroutine(persuasionReward());
+    }
+
+    protected IEnumerator persuasionReward()
+    {
+        yield return null;
     }
 
 }

@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
     private int activePlayerIndex = 0;
     private BoardTile activeTile;
     private WizardPiece activeWizard;
-    private bool picking;
     private WizardPiece.WizardType wType;
 
     #region UnityMagic
@@ -44,7 +43,6 @@ public class GameManager : MonoBehaviour
             _instance = this;
             trans = GetComponent<Transform>();
             tileMask = LayerMask.GetMask("Tile");
-            this.ExecuteDelayed(init, 0.2f);
 
             PlayerPieces = new PlayerPiece[4];
             List<PlayerPiece.ClassEnum> classes = GlobalVals.Instance.PlayerClasses;
@@ -60,65 +58,118 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-            
+
+            StartCoroutine(gameLoop());
         }
         else
         {
             Destroy(gameObject);
         }
     }
-
-    void Update()
-    {
-        if (picking && Input.GetMouseButtonUp(0))
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 400, tileMask))
-            {
-                BoardTile hitTile = hit.transform.GetComponent<BoardTile>();
-                if (hitTile.Wizard == null)
-                {
-                    hitTile.SpawnWizard(wType);
-                    picking = false;
-
-                    StartTurn();
-                }
-            }
-        }
-    }
     #endregion
 
-    private void init()
+    private IEnumerator placeWizard()
     {
-        StartTurn();
+        int roll = (int)(Random.value * 6);
+
+        if (roll < 1)
+        {
+            wType = WizardPiece.WizardType.Teleport;
+        }
+        else
+        {
+            if (roll < 3)
+            {
+                wType = WizardPiece.WizardType.Warlock;
+            }
+            else
+            {
+                wType = WizardPiece.WizardType.Apprentice;
+            }
+        }
+        NotificationView.DisplayNotification("Place a " + wType.GetName() + " wizard", 6);
+
+        bool done = false;
+        while (!done)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit, 400, tileMask))
+                {
+                    BoardTile hitTile = hit.transform.GetComponent<BoardTile>();
+                    if (hitTile.Wizard == null)
+                    {
+                        hitTile.SpawnWizard(wType);
+                        done = true;
+                    }
+                }
+            }
+            yield return null;
+        }
     }
 
-    public void StartTurn()
+    private IEnumerator gameLoop()
     {
+        yield return new WaitForSeconds(0.2f);
+        yield return StartCoroutine(playerTurn());
+    }
+
+    private IEnumerator playerTurn()
+    {
+        //Init Player HUD TODO: Refactor this into a HUD screen controller
         Text playerName = Constant.Find("PlayerName").GetComponent<Text>();
         PlayerPiece player = PlayerPieces[activePlayerIndex];
         playerName.text = string.Format("Player {0}\nC Tokens:\t{1}\nP Tokens:\t{2}", activePlayerIndex + 1, player.CombatTokens, player.PersuasionTokens);
+
         player.StartTurn();
+        int dieVal = 0;
+        yield return rollDie(out dieVal);
+        yield return ActivePlayer.Move(dieVal);
+        ActivePlayer.DisableCamera();//TODO: refactor all camera management to a manager singleton
+
+        if (activeTile.Wizard != null)//HACK: I don't like that the game manager is checking if the wizard is null
+        {
+            yield return activeTile.Combat();
+        }
+
+        yield return StartCoroutine(placeWizard());
+
+        GameManager.Instance.EndTurn();
+    }
+
+    private Coroutine rollDie(out int dieVal)
+    {
+        dieVal = (int)(Random.value * 6) + 1;
+        return StartCoroutine(rollDie(dieVal));
+    }
+
+    private bool rollClicked = false;
+    private IEnumerator rollDie(int dieVal)
+    {
         Roller.SetActive(true);
+        yield return new WaitUntil(() => rollClicked);
+        
+        yield return StartCoroutine(roll(dieVal));
+        Roller.SetActive(false);
+        rollClicked = false;
     }
 
     public void Roll()
     {
-        StartCoroutine(roll());
+        rollClicked = true;
     }
-    IEnumerator roll()
+
+    private IEnumerator roll(int dieVal)//TODO: refactor this into a Roller screen controller
     {
-        int number = (int)(Random.value * 6) + 1;
         Text rollText = Roller.transform.Find("RollNumber").GetComponent<Text>();
-        for (int i = 0; i < 30 + number; i++)
+        for (int i = 0; i < 30 + dieVal; i++)
         {
             rollText.text = (i % 6 + 1).ToString();
             yield return new WaitForSeconds(0.05f);
         }
-        PlayerPieces[activePlayerIndex].Rolled(number);
         yield return new WaitForSeconds(0.3f);
-        Roller.SetActive(false);
     }
 
     public void RegisterTile(BoardTile tile)
@@ -144,41 +195,23 @@ public class GameManager : MonoBehaviour
         startWizardPlacement();
     }
 
-    private void startWizardPlacement()
-    {
-        picking = true;
-        int roll = (int)(Random.value * 6);
-        
-        if (roll < 1)
-        {
-            wType = WizardPiece.WizardType.Teleport;
-        }
-        else
-        {
-            if (roll < 3)
-            {
-                wType = WizardPiece.WizardType.Warlock;
-            }
-            else
-            {
-                wType = WizardPiece.WizardType.Apprentice;
-            }
-        }
-        NotificationView.DisplayNotification("Place a "+wType.GetName()+" wizard", 6);
-    }
-
-    public void StartCombat(WizardPiece wizard)
+    public Coroutine RunCombat(AttackResult res, WizardPiece wizard)
     {
         activeWizard = wizard;
-        Combat.Show(wizard);
+
+        return StartCoroutine(combat(res, wizard));
+
     }
 
-    public void EndCombat(bool attack, int bonus)
+    private IEnumerator combat(AttackResult res, WizardPiece wizard)
     {
-        int toBeat = (attack ? activeWizard.FightStrength : activeWizard.PersuasionStrength) - bonus;
-        int die = (int)(Random.value * 6) + 1;
+        CombatScreenResult uiResult = new CombatScreenResult();
+        yield return Combat.GetCombatMove(uiResult, wizard);
 
-        activeTile.EndCombat(attack, die > toBeat);
+        int toBeat = (uiResult.Attack ? activeWizard.FightStrength : activeWizard.PersuasionStrength) - uiResult.Bonus;
+        int die = (int)(Random.value * 6) + 1;
+        res.Attack = uiResult.Attack;
+        res.Win = die > toBeat;
     }
 
     public void EndGame(int playerIndex)

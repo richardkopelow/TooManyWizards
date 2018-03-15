@@ -36,14 +36,6 @@ public class CombatHUD : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Show(WizardPiece wizard)
-    {
-        persuasionTokens = 0;
-        combatTokens = 0;
-        fightInfo.text = string.Format("{0}\nFight Strength:\t{1}\nstubbornness:\t{2}", wizard.Name, wizard.FightStrength, wizard.PersuasionStrength);
-        gameObject.SetActive(true);
-    }
-
     public void Hide()
     {
         gameObject.SetActive(false);
@@ -51,14 +43,36 @@ public class CombatHUD : MonoBehaviour
 
     public void EndCombat(bool attack)
     {
+        gettingMove = false;
+        this.attack = attack;
+    }
+
+    public Coroutine GetCombatMove(CombatScreenResult res, WizardPiece wizard)
+    {
+        return StartCoroutine(getCombatMove(res, wizard));
+    }
+
+    bool gettingMove = false;
+    bool attack = false;
+    private IEnumerator getCombatMove(CombatScreenResult res, WizardPiece wizard)
+    {
+        persuasionTokens = 0;
+        combatTokens = 0;
+        fightInfo.text = string.Format("{0}\nFight Strength:\t{1}\nstubbornness:\t{2}", wizard.Name, wizard.FightStrength, wizard.PersuasionStrength);
+        gameObject.SetActive(true);
+
+        gettingMove = true;
+        yield return new WaitWhile(() => gettingMove);
+
+        res.Attack = attack;
         if (attack)
         {
-            GameManager.Instance.EndCombat(attack, combatTokens);
+            res.Bonus = combatTokens;
             GameManager.Instance.ActivePlayer.CombatTokens -= combatTokens;
         }
         else
         {
-            GameManager.Instance.EndCombat(attack, persuasionTokens);
+            res.Bonus = persuasionTokens;
             GameManager.Instance.ActivePlayer.PersuasionTokens -= persuasionTokens;
         }
         Hide();
