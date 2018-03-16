@@ -19,29 +19,27 @@ public class Warlock : WizardPiece
         player.Teleport(player.LastCheckpoint.GetComponent<Transform>().position);
     }
 
-    public override void PersuasionReward()
+    protected override IEnumerator persuasionReward()
     {
-        //Pick Player
-        pickingPieces = true;
-        
-    }
-
-    private void Update()
-    {
-        if (pickingPieces && Input.GetMouseButton(0))
+        bool picking = true;
+        while (picking)
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 400, playerLayer))
+            if (Input.GetMouseButton(0))
             {
-                PlayerPiece hitPlayer = hit.transform.GetComponent<PlayerPiece>();
-                if (hitPlayer!=null)
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit, 400, playerLayer))
                 {
-                    Penalty(hitPlayer);
-                    pickingPieces = false;
-                    base.PersuasionReward();
+                    PlayerPiece hitPlayer = hit.transform.GetComponent<PlayerPiece>();
+                    if (hitPlayer != null)
+                    {
+                        Penalty(hitPlayer);
+
+                        picking = false;
+                    }
                 }
             }
+            yield return null;
         }
     }
 }

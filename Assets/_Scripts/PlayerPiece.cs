@@ -40,7 +40,7 @@ public class PlayerPiece : MonoBehaviour
     private float[] speeds;
     private int speedsIndex;
 
-    void Start()
+    void Awake()
     {
         trans = GetComponent<Transform>();
         nav = GetComponent<NavMeshAgent>();

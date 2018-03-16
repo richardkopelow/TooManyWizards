@@ -16,6 +16,7 @@ public class WizardPiece : MonoBehaviour
     public int FightTokenReward;
     public int PersuasionTokenReward;
     public BoardTile tile;
+    public GameObject Spell;
 
     private Animator anim;
 
@@ -26,7 +27,7 @@ public class WizardPiece : MonoBehaviour
 
     public void Die()
     {
-        Destroy(gameObject);
+        Destroy(gameObject,0.1f);
     }
 
     public virtual void Penalty(PlayerPiece player)
@@ -39,7 +40,7 @@ public class WizardPiece : MonoBehaviour
         return StartCoroutine(persuasionReward());
     }
 
-    protected IEnumerator persuasionReward()
+    protected virtual IEnumerator persuasionReward()
     {
         yield return null;
     }

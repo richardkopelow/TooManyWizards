@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 public class BoardTile : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class BoardTile : MonoBehaviour
     public GameObject VCam;
     public WizardPiece Wizard;
     public bool Checkpoint;
+
+    public TimelineAsset WizardAttackTimeline;
+    public TimelineAsset PlayerAttackTimeline;
+    public TimelineAsset PlayerPersuadeTimeline;
 
     public int DistanceFromEnd
     {
@@ -33,15 +38,18 @@ public class BoardTile : MonoBehaviour
 
     private Transform trans;
     private PlayableDirector director;
-
+    private AudioSource audio;
     private Transform wizardNode;
     private Transform[] playerNodes;
     private List<PlayerPiece> playerPieces;
+    private GameObject wizardSmoke;
+    private GameObject playerSmoke;
 
     void Start()
     {
         trans = GetComponent<Transform>();
         director = GetComponent<PlayableDirector>();
+        audio = GetComponent<AudioSource>();
         wizardNode = trans.Find("WizardNode");
         playerNodes = new Transform[5];
         for (int i = 0; i < 5; i++)
@@ -53,6 +61,8 @@ public class BoardTile : MonoBehaviour
         {
             tile.BackLink = this;
         }
+        wizardSmoke = trans.Find("WizardSmoke").gameObject;
+        playerSmoke = trans.Find("PlayerSmoke").gameObject;
     }
 
     public void RegisterPlayerPiece(PlayerPiece piece)
@@ -153,7 +163,6 @@ public class BoardTile : MonoBehaviour
         VCam.SetActive(true);
 
         return StartCoroutine(combat());
-
     }
 
     private IEnumerator combat()
@@ -162,24 +171,76 @@ public class BoardTile : MonoBehaviour
         yield return GameManager.Instance.RunCombat(attackRes,Wizard);
 
         PlayerPiece player = GameManager.Instance.ActivePlayer;
+        TimelineAsset timeline;
         if (attackRes.Win)
         {
             if (attackRes.Attack)
             {
-                player.Attack();
+                timeline = PlayerAttackTimeline;
+                director.SetGenericBinding(timeline.GetOutputTrack(0), wizardSmoke);
+                switch (player.Class)
+                {
+                    case PlayerPiece.ClassEnum.Rogue:
+                        director.SetGenericBinding(timeline.GetOutputTrack(1), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(2), audio);
+                        break;
+                    case PlayerPiece.ClassEnum.Ranger:
+                        director.SetGenericBinding(timeline.GetOutputTrack(3), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(4), audio);
+                        break;
+                    case PlayerPiece.ClassEnum.Bard:
+                        director.SetGenericBinding(timeline.GetOutputTrack(5), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(6), audio);
+                        break;
+                    case PlayerPiece.ClassEnum.Barbarian:
+                        director.SetGenericBinding(timeline.GetOutputTrack(7), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(8), audio);
+                        break;
+                    default:
+                        break;
+                }
             }
             else
             {
-                player.Persuade();
+                timeline = PlayerPersuadeTimeline;
+                switch (player.Class)
+                {
+                    case PlayerPiece.ClassEnum.Rogue:
+                        director.SetGenericBinding(timeline.GetOutputTrack(0), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(1), audio);
+                        break;
+                    case PlayerPiece.ClassEnum.Ranger:
+                        director.SetGenericBinding(timeline.GetOutputTrack(2), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(3), audio);
+                        break;
+                    case PlayerPiece.ClassEnum.Bard:
+                        director.SetGenericBinding(timeline.GetOutputTrack(4), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(5), audio);
+                        break;
+                    case PlayerPiece.ClassEnum.Barbarian:
+                        director.SetGenericBinding(timeline.GetOutputTrack(6), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(7), audio);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         else
         {
-            Wizard.Attack();
+            timeline = WizardAttackTimeline;
+            director.SetGenericBinding(timeline.GetOutputTrack(0), audio);
+            director.SetGenericBinding(timeline.GetOutputTrack(1), Wizard.GetComponent<Animator>());
+            director.SetGenericBinding(timeline.GetOutputTrack(2), Wizard.Spell);
+            director.SetGenericBinding(timeline.GetOutputTrack(3), playerSmoke);
         }
 
+        director.playableAsset = timeline;
+        director.Play();
         yield return new WaitWhile(() => director.state == PlayState.Playing);
 
+
+        VCam.SetActive(false);
         if (attackRes.Win)
         {
             if (attackRes.Attack)
@@ -187,28 +248,16 @@ public class BoardTile : MonoBehaviour
                 Wizard.Die();
                 player.CombatTokens += Wizard.FightTokenReward;
                 player.PersuasionTokens += Wizard.PersuasionTokenReward;
-
-                CleanupCombat();
             }
             else
             {
-                VCam.SetActive(false);
-                Wizard.PersuasionReward();
+                yield return Wizard.PersuasionReward();
             }
         }
         else
         {
             Wizard.Penalty(player);
-            Debug.Log("Lose");
-
-            CleanupCombat();
         }
-    }
-
-    public void CleanupCombat()
-    {
-        VCam.SetActive(false);
-        GameManager.Instance.EndTurn();
     }
 
     public void StartTurn()

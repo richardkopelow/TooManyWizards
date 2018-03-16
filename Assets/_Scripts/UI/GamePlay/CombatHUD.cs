@@ -49,6 +49,7 @@ public class CombatHUD : MonoBehaviour
 
     public Coroutine GetCombatMove(CombatScreenResult res, WizardPiece wizard)
     {
+        gameObject.SetActive(true);
         return StartCoroutine(getCombatMove(res, wizard));
     }
 
@@ -59,10 +60,11 @@ public class CombatHUD : MonoBehaviour
         persuasionTokens = 0;
         combatTokens = 0;
         fightInfo.text = string.Format("{0}\nFight Strength:\t{1}\nstubbornness:\t{2}", wizard.Name, wizard.FightStrength, wizard.PersuasionStrength);
-        gameObject.SetActive(true);
-
+        
         gettingMove = true;
-        yield return new WaitWhile(() => gettingMove);
+        yield return new WaitWhile(() => 
+        gettingMove
+        );
 
         res.Attack = attack;
         if (attack)

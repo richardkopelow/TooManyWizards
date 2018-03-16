@@ -113,7 +113,11 @@ public class GameManager : MonoBehaviour
     private IEnumerator gameLoop()
     {
         yield return new WaitForSeconds(0.2f);
-        yield return StartCoroutine(playerTurn());
+        while (true)
+        {
+            yield return StartCoroutine(playerTurn());
+            activePlayerIndex = (activePlayerIndex + 1) % PlayerPieces.Length;
+        }
     }
 
     private IEnumerator playerTurn()
@@ -133,10 +137,9 @@ public class GameManager : MonoBehaviour
         {
             yield return activeTile.Combat();
         }
-
+        yield return null;//This is to gap the calls so there will be no double dipping on input
         yield return StartCoroutine(placeWizard());
-
-        GameManager.Instance.EndTurn();
+        
     }
 
     private Coroutine rollDie(out int dieVal)
@@ -187,12 +190,6 @@ public class GameManager : MonoBehaviour
         DirectionPicker.SetActive(false);
         activeTile.DirectionPicked(direction);
 
-    }
-
-    public void EndTurn()
-    {
-        activePlayerIndex = (activePlayerIndex + 1) % PlayerPieces.Length;
-        startWizardPlacement();
     }
 
     public Coroutine RunCombat(AttackResult res, WizardPiece wizard)

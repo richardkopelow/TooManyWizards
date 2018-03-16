@@ -650,7 +650,6 @@ GameObject:
   - component: {fileID: 319776541}
   - component: {fileID: 319776544}
   - component: {fileID: 319776543}
-  - component: {fileID: 319776542}
   m_Layer: 0
   m_Name: BarbarianCamera
   m_TagString: Untagged
@@ -671,13 +670,6 @@ Transform:
   m_Father: {fileID: 663881933}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &319776542
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 319776540}
-  m_Enabled: 1
 --- !u!124 &319776543
 Behaviour:
   m_ObjectHideFlags: 0
@@ -1168,7 +1160,6 @@ GameObject:
   - component: {fileID: 1248460584}
   - component: {fileID: 1248460587}
   - component: {fileID: 1248460586}
-  - component: {fileID: 1248460585}
   m_Layer: 0
   m_Name: BardCamera
   m_TagString: Untagged
@@ -1189,13 +1180,6 @@ Transform:
   m_Father: {fileID: 663881933}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &1248460585
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1248460583}
-  m_Enabled: 1
 --- !u!124 &1248460586
 Behaviour:
   m_ObjectHideFlags: 0
@@ -1571,7 +1555,6 @@ GameObject:
   - component: {fileID: 1614550992}
   - component: {fileID: 1614550991}
   - component: {fileID: 1614550990}
-  - component: {fileID: 1614550989}
   m_Layer: 0
   m_Name: RogueCamera
   m_TagString: Untagged
@@ -1579,13 +1562,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1614550989
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1614550988}
-  m_Enabled: 1
 --- !u!124 &1614550990
 Behaviour:
   m_ObjectHideFlags: 0
@@ -2168,7 +2144,6 @@ GameObject:
   - component: {fileID: 2106203871}
   - component: {fileID: 2106203874}
   - component: {fileID: 2106203873}
-  - component: {fileID: 2106203872}
   m_Layer: 0
   m_Name: RangerCamera
   m_TagString: Untagged
@@ -2189,13 +2164,6 @@ Transform:
   m_Father: {fileID: 663881933}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &2106203872
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2106203870}
-  m_Enabled: 1
 --- !u!124 &2106203873
 Behaviour:
   m_ObjectHideFlags: 0

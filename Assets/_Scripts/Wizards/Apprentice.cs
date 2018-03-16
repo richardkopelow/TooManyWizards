@@ -14,9 +14,4 @@ public class Apprentice : WizardPiece
         }
         player.Teleport(targetTile.GetComponent<Transform>().position);
     }
-
-    public override void PersuasionReward()
-    {
-        base.PersuasionReward();
-    }
 }

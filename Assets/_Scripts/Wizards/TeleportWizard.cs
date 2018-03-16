@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class TeleportWizard : WizardPiece
 {
-    private bool pickingPieces;
     private int playerLayer;
-    private PlayerPiece[] pickedPieces;
 
     protected override void Start()
     {
@@ -30,7 +28,7 @@ public class TeleportWizard : WizardPiece
             }
         }
 
-        Destroy(gameObject);
+        Die();
         swapPlayers(player, lastPlayer);
         //TODO: do something about about ties
     }
@@ -42,36 +40,35 @@ public class TeleportWizard : WizardPiece
         p1.Teleport(position2);
     }
 
-    public override void PersuasionReward()
+    protected override IEnumerator persuasionReward()
     {
-        //Pick Players
-        pickingPieces = true;
-        pickedPieces = new PlayerPiece[2];
-    }
-
-    private void Update()
-    {
-        if (pickingPieces && Input.GetMouseButton(0))
+        PlayerPiece[] pickedPieces = new PlayerPiece[2];
+        bool picking = true;
+        while (picking)
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 400, playerLayer))
+            if (Input.GetMouseButtonUp(0))
             {
-                PlayerPiece hitPlayer = hit.transform.GetComponent<PlayerPiece>();
-                if (hitPlayer != null)
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit, 400, playerLayer))
                 {
-                    int index = pickedPieces[0] == null ? 0 : 1;
-                    pickedPieces[index] = hitPlayer;
-                    if (index == 1)
+                    PlayerPiece hitPlayer = hit.transform.GetComponent<PlayerPiece>();
+                    if (hitPlayer != null)
                     {
-                        swapPlayers(pickedPieces[0], pickedPieces[1]);
+                        int index = pickedPieces[0] == null ? 0 : 1;
+                        pickedPieces[index] = hitPlayer;
+                        if (index == 1)
+                        {
+                            swapPlayers(pickedPieces[0], pickedPieces[1]);
 
-                        tile.Wizard = null;
-                        Destroy(gameObject);
-                        base.PersuasionReward();
+                            picking = false;
+                            tile.Wizard = null;
+                            Die();
+                        }
                     }
                 }
             }
+            yield return null;
         }
     }
 }
