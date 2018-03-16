@@ -24,7 +24,7 @@ public class Warlock : WizardPiece
         bool picking = true;
         while (picking)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
