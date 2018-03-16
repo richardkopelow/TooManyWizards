@@ -80,6 +80,7 @@ public class PlayerPiece : MonoBehaviour
         Forced = true;
         trans.position = position;
         SetPosition(position);
+        gameObject.SetActive(true);
     }
 
     public void SetPosition(Vector3 position)

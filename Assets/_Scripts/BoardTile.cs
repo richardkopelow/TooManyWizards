@@ -178,23 +178,24 @@ public class BoardTile : MonoBehaviour
             {
                 timeline = PlayerAttackTimeline;
                 director.SetGenericBinding(timeline.GetOutputTrack(0), wizardSmoke);
+                director.SetGenericBinding(timeline.GetOutputTrack(1), Wizard.gameObject);
                 switch (player.Class)
                 {
                     case PlayerPiece.ClassEnum.Rogue:
-                        director.SetGenericBinding(timeline.GetOutputTrack(1), player.GetComponent<Animator>());
-                        director.SetGenericBinding(timeline.GetOutputTrack(2), audio);
+                        director.SetGenericBinding(timeline.GetOutputTrack(2), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(3), audio);
                         break;
                     case PlayerPiece.ClassEnum.Ranger:
-                        director.SetGenericBinding(timeline.GetOutputTrack(3), player.GetComponent<Animator>());
-                        director.SetGenericBinding(timeline.GetOutputTrack(4), audio);
+                        director.SetGenericBinding(timeline.GetOutputTrack(4), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(5), audio);
                         break;
                     case PlayerPiece.ClassEnum.Bard:
-                        director.SetGenericBinding(timeline.GetOutputTrack(5), player.GetComponent<Animator>());
-                        director.SetGenericBinding(timeline.GetOutputTrack(6), audio);
+                        director.SetGenericBinding(timeline.GetOutputTrack(6), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(7), audio);
                         break;
                     case PlayerPiece.ClassEnum.Barbarian:
-                        director.SetGenericBinding(timeline.GetOutputTrack(7), player.GetComponent<Animator>());
-                        director.SetGenericBinding(timeline.GetOutputTrack(8), audio);
+                        director.SetGenericBinding(timeline.GetOutputTrack(8), player.GetComponent<Animator>());
+                        director.SetGenericBinding(timeline.GetOutputTrack(9), audio);
                         break;
                     default:
                         break;
@@ -233,6 +234,7 @@ public class BoardTile : MonoBehaviour
             director.SetGenericBinding(timeline.GetOutputTrack(1), Wizard.GetComponent<Animator>());
             director.SetGenericBinding(timeline.GetOutputTrack(2), Wizard.Spell);
             director.SetGenericBinding(timeline.GetOutputTrack(3), playerSmoke);
+            director.SetGenericBinding(timeline.GetOutputTrack(4), player.gameObject);
         }
 
         director.playableAsset = timeline;
