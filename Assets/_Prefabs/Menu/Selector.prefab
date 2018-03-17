@@ -39,7 +39,6 @@ GameObject:
   - component: {fileID: 224786935415128748}
   - component: {fileID: 222374798054315994}
   - component: {fileID: 114667290924734234}
-  - component: {fileID: 114935832171399682}
   m_Layer: 5
   m_Name: CharacterImage
   m_TagString: Untagged
@@ -293,12 +292,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Classes: 00000000010000000200000003000000
-  CharacterRenderTextures:
-  - {fileID: 8400000, guid: a9caaae31f377404fb57227caac51497, type: 2}
-  - {fileID: 8400000, guid: f19a56462e0a0894a8948daf9a8ba93d, type: 2}
-  - {fileID: 8400000, guid: 7fbb5e8f6e4bcff458bbebb18a13ecdc, type: 2}
-  - {fileID: 8400000, guid: c9710d9329924f54f80657a5ed97d2a4, type: 2}
+  CharacterCameras:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   PlayerIndex: 0
+  CharacterIndex: 0
   acceptButtonText: {fileID: 0}
 --- !u!114 &114482524516185404
 MonoBehaviour:
@@ -594,17 +594,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114935832171399682
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1359743286866166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8755301b3fbb88b4b920a5095ba91487, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114942753120891948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -851,8 +840,8 @@ RectTransform:
   m_Father: {fileID: 224684817130602772}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 9.987488}
-  m_SizeDelta: {x: 0, y: 252.56}
+  m_AnchorMin: {x: 0, y: 0.2}
+  m_AnchorMax: {x: 1, y: 0.85}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

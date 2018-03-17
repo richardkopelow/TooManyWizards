@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CharacterSelector : MonoBehaviour
 {
     public PlayerPiece.ClassEnum[] Classes;
-    public Texture[] CharacterRenderTextures;
+    public Camera[] CharacterCameras;
     public int PlayerIndex;
     public int CharacterIndex;
 
@@ -63,6 +63,9 @@ public class CharacterSelector : MonoBehaviour
 
     public void SetupDisplay()
     {
-        characterImage.texture = CharacterRenderTextures[CharacterIndex];
+        RectTransform imageTrans = characterImage.GetComponent<RectTransform>();
+        RenderTexture rt = new RenderTexture((int)imageTrans.rect.width, (int)imageTrans.rect.height, 1);
+        characterImage.texture = rt;
+        CharacterCameras[CharacterIndex].targetTexture = rt;
     }
 }
