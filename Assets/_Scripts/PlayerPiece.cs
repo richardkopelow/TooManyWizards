@@ -79,7 +79,7 @@ public class PlayerPiece : MonoBehaviour
     {
         Forced = true;
         trans.position = position;
-        SetPosition(position);
+        this.ExecuteDelayed(()=> SetPosition(position),0);
         gameObject.SetActive(true);
     }
 

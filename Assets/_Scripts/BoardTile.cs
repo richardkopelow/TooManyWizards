@@ -179,23 +179,31 @@ public class BoardTile : MonoBehaviour
                 timeline = PlayerAttackTimeline;
                 director.SetGenericBinding(timeline.GetOutputTrack(0), wizardSmoke);
                 director.SetGenericBinding(timeline.GetOutputTrack(1), Wizard.gameObject);
+                timeline.GetOutputTrack(3).muted = true;
+                timeline.GetOutputTrack(5).muted = true;
+                timeline.GetOutputTrack(7).muted = true;
+                timeline.GetOutputTrack(9).muted = true;
                 switch (player.Class)
                 {
                     case PlayerPiece.ClassEnum.Rogue:
                         director.SetGenericBinding(timeline.GetOutputTrack(2), player.GetComponent<Animator>());
                         director.SetGenericBinding(timeline.GetOutputTrack(3), audio);
+                        timeline.GetOutputTrack(3).muted = false;
                         break;
                     case PlayerPiece.ClassEnum.Ranger:
                         director.SetGenericBinding(timeline.GetOutputTrack(4), player.GetComponent<Animator>());
                         director.SetGenericBinding(timeline.GetOutputTrack(5), audio);
+                        timeline.GetOutputTrack(5).muted = false;
                         break;
                     case PlayerPiece.ClassEnum.Bard:
                         director.SetGenericBinding(timeline.GetOutputTrack(6), player.GetComponent<Animator>());
                         director.SetGenericBinding(timeline.GetOutputTrack(7), audio);
+                        timeline.GetOutputTrack(7).muted = false;
                         break;
                     case PlayerPiece.ClassEnum.Barbarian:
                         director.SetGenericBinding(timeline.GetOutputTrack(8), player.GetComponent<Animator>());
                         director.SetGenericBinding(timeline.GetOutputTrack(9), audio);
+                        timeline.GetOutputTrack(9).muted = false;
                         break;
                     default:
                         break;
@@ -204,23 +212,31 @@ public class BoardTile : MonoBehaviour
             else
             {
                 timeline = PlayerPersuadeTimeline;
+                timeline.GetOutputTrack(1).muted = true;
+                timeline.GetOutputTrack(3).muted = true;
+                timeline.GetOutputTrack(5).muted = true;
+                timeline.GetOutputTrack(7).muted = true;
                 switch (player.Class)
                 {
                     case PlayerPiece.ClassEnum.Rogue:
                         director.SetGenericBinding(timeline.GetOutputTrack(0), player.GetComponent<Animator>());
                         director.SetGenericBinding(timeline.GetOutputTrack(1), audio);
+                        timeline.GetOutputTrack(1).muted = false;
                         break;
                     case PlayerPiece.ClassEnum.Ranger:
                         director.SetGenericBinding(timeline.GetOutputTrack(2), player.GetComponent<Animator>());
                         director.SetGenericBinding(timeline.GetOutputTrack(3), audio);
+                        timeline.GetOutputTrack(3).muted = false;
                         break;
                     case PlayerPiece.ClassEnum.Bard:
                         director.SetGenericBinding(timeline.GetOutputTrack(4), player.GetComponent<Animator>());
                         director.SetGenericBinding(timeline.GetOutputTrack(5), audio);
+                        timeline.GetOutputTrack(5).muted = false;
                         break;
                     case PlayerPiece.ClassEnum.Barbarian:
                         director.SetGenericBinding(timeline.GetOutputTrack(6), player.GetComponent<Animator>());
                         director.SetGenericBinding(timeline.GetOutputTrack(7), audio);
+                        timeline.GetOutputTrack(7).muted = false;
                         break;
                     default:
                         break;

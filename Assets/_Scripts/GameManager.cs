@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator playerTurn()
     {
         //Init Player HUD TODO: Refactor this into a HUD screen controller
-        Text playerName = Constant.Find("PlayerName").GetComponent<Text>();
+        Text playerName = Constant.Find("Background/PlayerName").GetComponent<Text>();
         PlayerPiece player = PlayerPieces[activePlayerIndex];
         playerName.text = string.Format("Player {0}\nC Tokens:\t{1}\nP Tokens:\t{2}", activePlayerIndex + 1, player.CombatTokens, player.PersuasionTokens);
 
