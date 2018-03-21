@@ -80,8 +80,8 @@ public class PlayerPiece : MonoBehaviour
         Forced = true;
         currentTile.DeregisterPlayer(this);
         trans.position = position;
-        this.ExecuteDelayed(()=> SetPosition(position),0);
         gameObject.SetActive(true);
+        this.ExecuteDelayed(() => SetPosition(position), 0);
     }
 
     public void SetPosition(Vector3 position)

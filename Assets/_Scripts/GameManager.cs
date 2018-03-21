@@ -116,6 +116,13 @@ public class GameManager : MonoBehaviour
                         hitTile.SpawnWizard(wType);
                         done = true;
                     }
+                    if (wType>hitTile.Wizard.Type)
+                    {
+                        hitTile.Wizard.Die();
+                        hitTile.Wizard = null;
+                        hitTile.SpawnWizard(wType);
+                        done = true;
+                    }
                 }
             }
             yield return null;
@@ -151,6 +158,7 @@ public class GameManager : MonoBehaviour
         }
         yield return null;//This is to gap the calls so there will be no double dipping on input
         yield return StartCoroutine(placeWizard());
+        NotificationView.Hide();
         
     }
 

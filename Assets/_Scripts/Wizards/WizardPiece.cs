@@ -9,11 +9,12 @@ public class WizardPiece : MonoBehaviour
 
     public enum WizardType
     {
-        Apprentice,
-        Warlock,
-        Teleport
+        Apprentice=1,
+        Warlock=2,
+        Teleport=3
     }
 
+    public WizardType Type;
     public string Name;
     public int FightStrength;
     public int PersuasionStrength;

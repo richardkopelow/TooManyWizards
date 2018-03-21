@@ -420,6 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831fe90b7c32414468a30deb73ec9be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 1
   Name: Apprentice
   FightStrength: 3
   PersuasionStrength: 3

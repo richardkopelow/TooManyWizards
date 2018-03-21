@@ -421,6 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e954c1a603aaa914e844b4bea361f439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 3
   Name: Teleport
   FightStrength: 4
   PersuasionStrength: 5

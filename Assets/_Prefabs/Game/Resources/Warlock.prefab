@@ -420,6 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370bd58db2ae7084881c9b9ddb0638b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 2
   Name: Warlock
   FightStrength: 5
   PersuasionStrength: 4
