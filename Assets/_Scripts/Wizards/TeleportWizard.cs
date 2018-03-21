@@ -72,4 +72,10 @@ public class TeleportWizard : WizardPiece
             yield return null;
         }
     }
+
+    public override void Die()
+    {
+        base.Die();
+        GameManager.Instance.TeleportCount--;
+    }
 }

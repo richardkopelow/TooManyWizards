@@ -1275,7 +1275,7 @@ ParticleSystem:
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4636,7 +4636,7 @@ ParticleSystem:
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -8189,6 +8189,8 @@ PlayableDirector:
   - key: {fileID: 114970009358900222, guid: 498b31279da973e498146a1762f0d2c6, type: 2}
     value: {fileID: 0}
   - key: {fileID: 114901370214003934, guid: 498b31279da973e498146a1762f0d2c6, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114698175602678730, guid: e145113fb79cb9143922f7394885d9bd, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References:

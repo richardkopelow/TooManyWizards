@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
             return PlayerPieces[activePlayerIndex];
         }
     }
+    public int TeleportCount;
+    public int WarlockCount;
 
     private int tileMask;
     private Transform trans;
@@ -96,23 +98,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator placeWizard()
     {
-        int roll = (int)(Random.value * 6);
-
-        if (roll < 1)
-        {
-            wType = WizardPiece.WizardType.Teleport;
-        }
-        else
-        {
-            if (roll < 3)
-            {
-                wType = WizardPiece.WizardType.Warlock;
-            }
-            else
-            {
-                wType = WizardPiece.WizardType.Apprentice;
-            }
-        }
+        wType = WizardPiece.RandomWizardType();
         NotificationView.DisplayNotification("Place a " + wType.GetName() + " wizard", 6);
 
         bool done = false;

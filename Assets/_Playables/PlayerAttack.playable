@@ -131,19 +131,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -171,37 +159,13 @@ MonoBehaviour:
     m_BlendOutDuration: 0.21666666666666656
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -229,19 +193,7 @@ MonoBehaviour:
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -488,7 +440,7 @@ MonoBehaviour:
   m_Name: Audio Track1
   m_EditorClassIdentifier: 
   m_Locked: 0
-  m_Muted: 0
+  m_Muted: 1
   m_CustomPlayableFullTypename: 
   m_AnimClip: {fileID: 0}
   m_Parent: {fileID: 114298631147662074}
@@ -864,7 +816,7 @@ MonoBehaviour:
     m_ClipIn: 0
     m_Asset: {fileID: 114064177233866546}
     m_UnderlyingAsset: {fileID: 114064177233866546}
-    m_Duration: 5.016666666666667
+    m_Duration: 3.5166666666666666
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114698175602678730}
     m_EaseInDuration: 0
@@ -1028,7 +980,7 @@ MonoBehaviour:
     m_ClipIn: 0
     m_Asset: {fileID: 114992157185608572}
     m_UnderlyingAsset: {fileID: 114992157185608572}
-    m_Duration: 2.7250000000000005
+    m_Duration: 1.333333333333333
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114763256525516052}
     m_EaseInDuration: 0
@@ -1129,7 +1081,7 @@ MonoBehaviour:
   m_Name: Audio Track3
   m_EditorClassIdentifier: 
   m_Locked: 0
-  m_Muted: 1
+  m_Muted: 0
   m_CustomPlayableFullTypename: 
   m_AnimClip: {fileID: 0}
   m_Parent: {fileID: 114486989852716368}

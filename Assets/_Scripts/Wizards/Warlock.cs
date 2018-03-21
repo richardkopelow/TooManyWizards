@@ -43,4 +43,10 @@ public class Warlock : WizardPiece
             yield return null;
         }
     }
+
+    public override void Die()
+    {
+        base.Die();
+        GameManager.Instance.WarlockCount--;
+    }
 }
