@@ -38,6 +38,7 @@ public class TeleportWizard : WizardPiece
         Vector3 position2 = p2.GetComponent<Transform>().position;
         p2.Teleport(p1.GetComponent<Transform>().position);
         p1.Teleport(position2);
+
     }
 
     protected override IEnumerator persuasionReward()
@@ -60,6 +61,9 @@ public class TeleportWizard : WizardPiece
                         pickedPieces[index] = hitPlayer;
                         if (index == 1)
                         {
+                            pickedPieces[0].CurrentTile.SmokePlayer();
+                            pickedPieces[1].CurrentTile.SmokePlayer();
+                            yield return new WaitForSeconds(0.5f);
                             swapPlayers(pickedPieces[0], pickedPieces[1]);
 
                             picking = false;

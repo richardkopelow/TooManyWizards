@@ -23,18 +23,18 @@ public class PlayerPiece : MonoBehaviour
     public int PersuasionTokens = 0;
     public int CombatTokens = 0;
     public BoardTile LastCheckpoint;
+    public BoardTile CurrentTile;
     public int DistanceFromEnd
     {
         get
         {
-            return currentTile.DistanceFromEnd;
+            return CurrentTile.DistanceFromEnd;
         }
     }
 
     private Transform trans;
     private NavMeshAgent nav;
     private Animator anim; 
-    private BoardTile currentTile;
     private BoardTile lastTile;
     private Vector3 lookatTarget;
     private float[] speeds;
@@ -78,7 +78,7 @@ public class PlayerPiece : MonoBehaviour
     public void Teleport(Vector3 position)
     {
         Forced = true;
-        currentTile.DeregisterPlayer(this);
+        CurrentTile.DeregisterPlayer(this);
         trans.position = position;
         gameObject.SetActive(true);
         this.ExecuteDelayed(() => SetPosition(position), 0);
@@ -97,7 +97,7 @@ public class PlayerPiece : MonoBehaviour
 
     public void RegisterToTile(BoardTile tile)
     {
-        currentTile = tile;
+        CurrentTile = tile;
         if (!Started)
         {
             Started = true;
@@ -106,20 +106,20 @@ public class PlayerPiece : MonoBehaviour
 
     public void DeregisterToTile()
     {
-        if (currentTile == lastTile)
+        if (CurrentTile == lastTile)
         {
-            currentTile = null;
+            CurrentTile = null;
         }
         else
         {
-            lastTile = currentTile;
+            lastTile = CurrentTile;
         }
     }
 
     public Coroutine Move(int movement)
     {
         Movement = movement;
-        currentTile.MovePiece(this);
+        CurrentTile.MovePiece(this);
         return StartCoroutine(move());
     }
 
@@ -136,7 +136,7 @@ public class PlayerPiece : MonoBehaviour
     public void StartTurn()
     {
         VCam.SetActive(true);
-        currentTile.StartTurn();
+        CurrentTile.StartTurn();
     }
 
     public void DisableCamera()

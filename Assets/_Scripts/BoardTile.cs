@@ -287,4 +287,16 @@ public class BoardTile : MonoBehaviour
     {
         GameManager.Instance.RegisterTile(this);
     }
+
+    public void SmokePlayer()
+    {
+        StartCoroutine(smokePlayer());
+    }
+
+    private IEnumerator smokePlayer()
+    {
+        playerSmoke.SetActive(true);
+        yield return new WaitForSeconds(1);
+        playerSmoke.SetActive(false);
+    }
 }

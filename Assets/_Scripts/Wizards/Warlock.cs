@@ -34,6 +34,9 @@ public class Warlock : WizardPiece
                     PlayerPiece hitPlayer = hit.transform.GetComponent<PlayerPiece>();
                     if (hitPlayer != null)
                     {
+                        hitPlayer.CurrentTile.SmokePlayer();
+                        hitPlayer.LastCheckpoint.SmokePlayer();
+                        yield return new WaitForSeconds(0.5f);
                         Penalty(hitPlayer);
 
                         picking = false;
