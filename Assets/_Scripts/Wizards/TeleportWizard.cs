@@ -42,11 +42,12 @@ public class TeleportWizard : WizardPiece
 
     protected override IEnumerator persuasionReward()
     {
+        GameManager.Instance.NotificationView.DisplayNotification("Select two players to swap places", 5);
         PlayerPiece[] pickedPieces = new PlayerPiece[2];
         bool picking = true;
         while (picking)
         {
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) && !GameManager.Instance.Paused)
             {
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

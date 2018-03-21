@@ -142,9 +142,14 @@ public class BoardTile : MonoBehaviour
         if (other.tag == "PlayerPiece")
         {
             PlayerPiece piece = other.GetComponent<PlayerPiece>();
-            playerPieces.Remove(piece);
-            piece.DeregisterToTile();
+            DeregisterPlayer(piece);
         }
+    }
+
+    public void DeregisterPlayer(PlayerPiece piece)
+    {
+        playerPieces.Remove(piece);
+        piece.DeregisterToTile();
     }
 
     public void SpawnWizard(WizardPiece.WizardType pieceType)

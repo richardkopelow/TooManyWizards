@@ -21,10 +21,11 @@ public class Warlock : WizardPiece
 
     protected override IEnumerator persuasionReward()
     {
+        GameManager.Instance.NotificationView.DisplayNotification("Select a player to send back", 5);
         bool picking = true;
         while (picking)
         {
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) && !GameManager.Instance.Paused)
             {
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

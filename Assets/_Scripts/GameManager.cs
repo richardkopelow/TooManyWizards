@@ -6,19 +6,32 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager _instance;
-    public static GameManager Instance
+    public static GameManager Instance;
+    private bool _paused;
+
+    public bool Paused
     {
-        get
-        {
-            return _instance;
+        get { return _paused; }
+        set {
+            _paused = value;
+            if (_paused)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
         }
     }
+
+
     public Transform Constant;
     public GameObject Roller;
     public GameObject DirectionPicker;
     public CombatHUD Combat;
     public Notifications NotificationView;
+    public PauseMenu PauseMenu;
     public PlayerPiece[] PlayerPieces;
     public PlayerPiece ActivePlayer
     {
@@ -34,15 +47,17 @@ public class GameManager : MonoBehaviour
     private BoardTile activeTile;
     private WizardPiece activeWizard;
     private WizardPiece.WizardType wType;
+    private bool[] uiStates;
 
     #region UnityMagic
     void Start()
     {
-        if (_instance == null)
+        if (Instance == null)
         {
-            _instance = this;
+            Instance = this;
             trans = GetComponent<Transform>();
             tileMask = LayerMask.GetMask("Tile");
+            uiStates = new bool[5];
 
             PlayerPieces = new PlayerPiece[4];
             List<PlayerPiece.ClassEnum> classes = GlobalVals.Instance.PlayerClasses;
@@ -64,6 +79,17 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        if (!Paused)
+        {
+            if (Input.GetButtonUp("Pause"))
+            {
+                PauseMenu.Show();
+            }
         }
     }
     #endregion
@@ -196,11 +222,11 @@ public class GameManager : MonoBehaviour
     {
         activeWizard = wizard;
 
-        return StartCoroutine(combat(res, wizard));
+        return StartCoroutine(runCombat(res, wizard));
 
     }
 
-    private IEnumerator combat(AttackResult res, WizardPiece wizard)
+    private IEnumerator runCombat(AttackResult res, WizardPiece wizard)
     {
         CombatScreenResult uiResult = new CombatScreenResult();
         yield return Combat.GetCombatMove(uiResult, wizard);
@@ -220,5 +246,28 @@ public class GameManager : MonoBehaviour
     {
         yield return NotificationView.DisplayNotification(string.Format("Player {0} is the winner!", playerIndex + 1), 5);
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void HideUI()
+    {
+        uiStates[0] = Constant.gameObject.activeInHierarchy;
+        Constant.gameObject.SetActive(false);
+        uiStates[1] = Roller.activeInHierarchy;
+        Roller.SetActive(false);
+        uiStates[2] = DirectionPicker.activeInHierarchy;
+        DirectionPicker.SetActive(false);
+        uiStates[3] = Combat.gameObject.activeInHierarchy;
+        Combat.gameObject.SetActive(false);
+        uiStates[4] = NotificationView.gameObject.activeInHierarchy;
+        NotificationView.gameObject.SetActive(false);
+    }
+
+    public void RestoreUI()
+    {
+        Constant.gameObject.SetActive(uiStates[0]);
+        Roller.SetActive(uiStates[1]);
+        DirectionPicker.SetActive(uiStates[2]);
+        Combat.gameObject.SetActive(uiStates[3]);
+        NotificationView.gameObject.SetActive(uiStates[4]);
     }
 }

@@ -78,6 +78,7 @@ public class PlayerPiece : MonoBehaviour
     public void Teleport(Vector3 position)
     {
         Forced = true;
+        currentTile.DeregisterPlayer(this);
         trans.position = position;
         this.ExecuteDelayed(()=> SetPosition(position),0);
         gameObject.SetActive(true);
