@@ -16,23 +16,31 @@ public class BoardTile : MonoBehaviour
     public TimelineAsset PlayerAttackTimeline;
     public TimelineAsset PlayerPersuadeTimeline;
 
+    private int _distanceFromEnd = -1;
     public int DistanceFromEnd
     {
         get
         {
-            if (NextTiles.Length == 0)
+            if (_distanceFromEnd == -1)
             {
-                return 0;
-            }
-            int minDistance = int.MaxValue;
-            foreach (BoardTile tile in NextTiles)
-            {
-                if (tile.DistanceFromEnd < minDistance)
+                if (NextTiles.Length == 0)
                 {
-                    minDistance = tile.DistanceFromEnd;
+                    _distanceFromEnd = 0;
+                }
+                else
+                {
+                    int minDistance = int.MaxValue;
+                    foreach (BoardTile tile in NextTiles)
+                    {
+                        if (tile.DistanceFromEnd < minDistance)
+                        {
+                            minDistance = tile.DistanceFromEnd;
+                        }
+                    }
+                    _distanceFromEnd = minDistance + 1;
                 }
             }
-            return minDistance + 1;
+            return _distanceFromEnd;
         }
     }
 
@@ -63,6 +71,7 @@ public class BoardTile : MonoBehaviour
         }
         wizardSmoke = trans.Find("WizardSmoke").gameObject;
         playerSmoke = trans.Find("PlayerSmoke").gameObject;
+        int distance = DistanceFromEnd;
     }
 
     public void RegisterPlayerPiece(PlayerPiece piece)
