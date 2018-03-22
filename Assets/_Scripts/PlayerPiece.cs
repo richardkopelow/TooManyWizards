@@ -67,7 +67,7 @@ public class PlayerPiece : MonoBehaviour
             Vector3 diff = lookatTarget - trans.position;
             float angle = Vector3.SignedAngle(trans.forward, diff,Vector3.up);
             
-            trans.Rotate(0, angle * 0.01f, 0);
+            trans.Rotate(0, angle * 0.03f, 0);
         }
         else
         {
@@ -81,7 +81,7 @@ public class PlayerPiece : MonoBehaviour
         CurrentTile.DeregisterPlayer(this);
         trans.position = position;
         gameObject.SetActive(true);
-        this.ExecuteDelayed(() => SetPosition(position), 0);
+        SetPosition(position);
     }
 
     public void SetPosition(Vector3 position)

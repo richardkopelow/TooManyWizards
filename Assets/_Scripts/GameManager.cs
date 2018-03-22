@@ -98,34 +98,54 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator placeWizard()
     {
+        //Get a random wizard type to place
         wType = WizardPiece.RandomWizardType();
-        NotificationView.DisplayNotification("Place a " + wType.GetName() + " wizard", 6);
 
-        bool done = false;
-        while (!done)
+        //Check if there is anywhere to place this type of wizard
+        BoardTile[] tiles = FindObjectsOfType<BoardTile>();
+        bool openSpace = false;
+        foreach (BoardTile tile in tiles)
         {
-            if (Input.GetMouseButtonUp(0))
+            if (tile.Wizard==null||tile.Wizard.Type<wType)
             {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit, 400, tileMask))
+                openSpace = true;
+            }
+        }
+
+        if (openSpace)
+        {
+            NotificationView.DisplayNotification("Place a " + wType.GetName() + " wizard", 6);
+
+            bool done = false;
+            while (!done)
+            {
+                if (Input.GetMouseButtonUp(0))
                 {
-                    BoardTile hitTile = hit.transform.GetComponent<BoardTile>();
-                    if (hitTile.Wizard == null)
+                    RaycastHit hit;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out hit, 400, tileMask))
                     {
-                        hitTile.SpawnWizard(wType);
-                        done = true;
-                    }
-                    if (wType>hitTile.Wizard.Type)
-                    {
-                        hitTile.Wizard.Die();
-                        hitTile.Wizard = null;
-                        hitTile.SpawnWizard(wType);
-                        done = true;
+                        BoardTile hitTile = hit.transform.GetComponent<BoardTile>();
+                        if (hitTile.Wizard == null)
+                        {
+                            hitTile.SpawnWizard(wType);
+                            done = true;
+                        }
+                        if (wType > hitTile.Wizard.Type)
+                        {
+                            hitTile.Wizard.Die();
+                            hitTile.Wizard = null;
+                            hitTile.SpawnWizard(wType);
+                            done = true;
+                        }
                     }
                 }
+                yield return null;
             }
-            yield return null;
+        }
+        else
+        {
+            yield return NotificationView.DisplayNotification("Nowhere to place a " + wType.GetName() + " wizard", 3);
         }
     }
 
