@@ -1086,11 +1086,11 @@ MonoBehaviour:
     FarClipPlane: 5000
     Dutch: 0
   m_YAxis:
-    Value: 0.5
+    Value: 0.6
     m_MaxSpeed: 2
     m_AccelTime: 0.2
     m_DecelTime: 0.1
-    m_InputAxisName: Mouse Y
+    m_InputAxisName: 
     m_InputAxisValue: 0
     m_InvertAxis: 0
   m_XAxis:
@@ -1098,8 +1098,8 @@ MonoBehaviour:
     m_MaxSpeed: 300
     m_AccelTime: 0.1
     m_DecelTime: 0.1
-    m_InputAxisName: Mouse X
-    m_InputAxisValue: 0
+    m_InputAxisName: 
+    m_InputAxisValue: 0.1
     m_InvertAxis: 1
   m_Heading:
     m_HeadingDefinition: 2
