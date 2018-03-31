@@ -12546,6 +12546,16 @@ Prefab:
       propertyPath: m_Name
       value: Selector1
       objectReference: {fileID: 0}
+    - target: {fileID: 114249739219257778, guid: 991d4c46dfb370646837049839c7e003,
+        type: 2}
+      propertyPath: PlayerIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114249739219257778, guid: 991d4c46dfb370646837049839c7e003,
+        type: 2}
+      propertyPath: CharacterIndex
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 991d4c46dfb370646837049839c7e003, type: 2}
   m_IsPrefabParent: 0

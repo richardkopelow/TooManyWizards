@@ -863,8 +863,8 @@ MonoBehaviour:
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
   m_Priority: 10
-  m_LookAt: {fileID: 4366361001827258}
-  m_Follow: {fileID: 4366361001827258}
+  m_LookAt: {fileID: 4515668806776526}
+  m_Follow: {fileID: 4515668806776526}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -958,6 +958,7 @@ MonoBehaviour:
   PersuasionTokens: 4
   CombatTokens: 2
   LastCheckpoint: {fileID: 0}
+  CurrentTile: {fileID: 0}
 --- !u!136 &136036864145233738
 CapsuleCollider:
   m_ObjectHideFlags: 1

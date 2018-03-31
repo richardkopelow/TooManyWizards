@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class CharacterSelector : MonoBehaviour
 {
-    public PlayerPiece.ClassEnum[] Classes;
+    public PlayerPiece[] Characters;
     public Camera[] CharacterCameras;
     public int PlayerIndex;
     public int CharacterIndex;
 
     private RawImage characterImage;
-    public Text acceptButtonText;
+    private Text acceptButtonText;
+    private Text statBlock;
     private bool accepted;
 
     private void Start()
@@ -19,6 +20,7 @@ public class CharacterSelector : MonoBehaviour
         Transform trans = transform;
         characterImage = trans.Find("CharacterImage").GetComponent<RawImage>();
         acceptButtonText = trans.Find("AcceptButton/Text").GetComponent<Text>();
+        statBlock = trans.Find("StatBlock").GetComponent<Text>();
         SetupDisplay();
     }
 
@@ -27,7 +29,7 @@ public class CharacterSelector : MonoBehaviour
         CharacterIndex--;
         if (CharacterIndex < 0)
         {
-            CharacterIndex = Classes.Length - 1; ;
+            CharacterIndex = Characters.Length - 1; ;
         }
         SetupDisplay();
     }
@@ -35,7 +37,7 @@ public class CharacterSelector : MonoBehaviour
     public void Right()
     {
         CharacterIndex++;
-        if (CharacterIndex >= Classes.Length)
+        if (CharacterIndex >= Characters.Length)
         {
             CharacterIndex = 0;
         }
@@ -52,9 +54,9 @@ public class CharacterSelector : MonoBehaviour
         }
         else
         {
-            if (!GlobalVals.Instance.PlayerClasses.Contains(Classes[CharacterIndex]))
+            if (!GlobalVals.Instance.PlayerClasses.Contains(Characters[CharacterIndex].Class))
             {
-                GlobalVals.Instance.PlayerClasses[PlayerIndex] = Classes[CharacterIndex];
+                GlobalVals.Instance.PlayerClasses[PlayerIndex] = Characters[CharacterIndex].Class;
                 acceptButtonText.text = "Unready";
                 accepted = true;
             }
@@ -67,5 +69,6 @@ public class CharacterSelector : MonoBehaviour
         RenderTexture rt = new RenderTexture((int)imageTrans.rect.width, (int)imageTrans.rect.height, 1);
         characterImage.texture = rt;
         CharacterCameras[CharacterIndex].targetTexture = rt;
+        statBlock.text = string.Format("Combat Tokens:\t{0}\nPersuasion Tokens:\t{1}", Characters[CharacterIndex].CombatTokens, Characters[CharacterIndex].PersuasionTokens);
     }
 }
