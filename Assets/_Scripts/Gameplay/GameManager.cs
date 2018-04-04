@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     public Transform Constant;
     public GameObject Roller;
+    public DieRoller DieRoller;
     public GameObject DirectionPicker;
     public CombatHUD Combat;
     public Notifications NotificationView;
@@ -167,9 +168,9 @@ public class GameManager : MonoBehaviour
         playerName.text = string.Format("Player {0}\nC Tokens:\t{1}\nP Tokens:\t{2}", activePlayerIndex + 1, player.CombatTokens, player.PersuasionTokens);
 
         player.StartTurn();
-        int dieVal = 0;
-        yield return rollDie(out dieVal);
-        yield return ActivePlayer.Move(dieVal);
+        CoroutineOut<int> dieRoll = new CoroutineOut<int>();
+        yield return rollDie(dieRoll);
+        yield return ActivePlayer.Move(dieRoll.Data);
         ActivePlayer.DisableCamera();//TODO: refactor all camera management to a manager singleton
 
         if (activeTile.Wizard != null)//HACK: I don't like that the game manager is checking if the wizard is null
@@ -182,19 +183,18 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private Coroutine rollDie(out int dieVal)
+    private Coroutine rollDie(CoroutineOut<int> result)
     {
-        dieVal = (int)(Random.value * 6) + 1;
-        return StartCoroutine(rollDie(dieVal));
+        return StartCoroutine(rollDieCoroutine(result));
     }
 
     private bool rollClicked = false;
-    private IEnumerator rollDie(int dieVal)
+    private IEnumerator rollDieCoroutine(CoroutineOut<int> result)
     {
         Roller.SetActive(true);
         yield return new WaitUntil(() => rollClicked);
-        
-        yield return StartCoroutine(roll(dieVal));
+
+        yield return DieRoller.RollDie(result);
         Roller.SetActive(false);
         rollClicked = false;
     }
@@ -202,17 +202,6 @@ public class GameManager : MonoBehaviour
     public void Roll()
     {
         rollClicked = true;
-    }
-
-    private IEnumerator roll(int dieVal)//TODO: refactor this into a Roller screen controller
-    {
-        Text rollText = Roller.transform.Find("RollNumber").GetComponent<Text>();
-        for (int i = 0; i < 30 + dieVal; i++)
-        {
-            rollText.text = (i % 6 + 1).ToString();
-            yield return new WaitForSeconds(0.05f);
-        }
-        yield return new WaitForSeconds(0.3f);
     }
 
     public void RegisterTile(BoardTile tile)
