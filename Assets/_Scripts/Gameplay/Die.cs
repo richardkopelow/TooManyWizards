@@ -21,12 +21,12 @@ public class Die : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         castMask = LayerMask.GetMask("Ground");
         directions = new Vector3[] {
-            Vector3.up,
-            Vector3.down,
-            Vector3.left,
-            Vector3.right,
             Vector3.forward,
-            Vector3.back
+            Vector3.back,
+            Vector3.right,
+            Vector3.left,
+            Vector3.down,
+            Vector3.up
         };
     }
 
@@ -50,7 +50,7 @@ public class Die : MonoBehaviour
         {
             yield return null;//new WaitForFixedUpdate();
         }
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         float minDist = float.MaxValue;
         for (int i = 0; i < directions.Length; i++)
         {

@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
 
     public Transform Constant;
     public GameObject Roller;
-    public DieRoller DieRoller;
     public GameObject DirectionPicker;
     public CombatHUD Combat;
     public Notifications NotificationView;
@@ -170,7 +169,8 @@ public class GameManager : MonoBehaviour
         player.StartTurn();
         CoroutineOut<int> dieRoll = new CoroutineOut<int>();
         yield return rollDie(dieRoll);
-        yield return ActivePlayer.Move(dieRoll.Data);
+        yield return new WaitForSeconds(1.2f);
+        yield return ActivePlayer.Move(dieRoll);
         ActivePlayer.DisableCamera();//TODO: refactor all camera management to a manager singleton
 
         if (activeTile.Wizard != null)//HACK: I don't like that the game manager is checking if the wizard is null
@@ -194,8 +194,8 @@ public class GameManager : MonoBehaviour
         Roller.SetActive(true);
         yield return new WaitUntil(() => rollClicked);
 
-        yield return DieRoller.RollDie(result);
         Roller.SetActive(false);
+        yield return DieRoller.Instance.RollDie(result);
         rollClicked = false;
     }
 
@@ -235,7 +235,9 @@ public class GameManager : MonoBehaviour
         yield return Combat.GetCombatMove(uiResult, wizard);
 
         int toBeat = (uiResult.Attack ? activeWizard.FightStrength : activeWizard.PersuasionStrength) - uiResult.Bonus;
-        int die = (int)(Random.value * 6) + 1;
+        CoroutineOut<int> die = new CoroutineOut<int>();
+        yield return DieRoller.Instance.RollDie(die);
+        yield return new WaitForSeconds(1.2f);
         res.Attack = uiResult.Attack;
         res.Win = die > toBeat;
     }

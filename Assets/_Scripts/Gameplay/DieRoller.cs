@@ -4,9 +4,21 @@ using UnityEngine;
 
 public class DieRoller : MonoBehaviour
 {
+    private static DieRoller _instance;
+
+    public static DieRoller Instance
+    {
+        get { return _instance; }
+    }
+
     public GameObject DiePrefab;
 
     private Transform trans;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     void Start()
     {
